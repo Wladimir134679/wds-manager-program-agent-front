@@ -26,33 +26,6 @@
       <v-list
           dense
           nav>
-        <v-list-item link v-if="isAuth">
-          <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
-            Профиль
-          </v-list-item-title>
-        </v-list-item>
-
-        <v-list-item link v-else :to="'/login'">
-          <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
-            Войти
-          </v-list-item-title>
-        </v-list-item>
-
-
-<!--        <v-list-item-->
-<!--            link-->
-<!--            v-for="item in items"-->
-<!--            :key="item.title"-->
-<!--            :to="item.link">-->
-
-<!--          <v-list-item-title>-->
-<!--            <v-icon>{{ item.icon }}</v-icon>-->
-<!--            {{ item.title }}-->
-<!--          </v-list-item-title>-->
-<!--        </v-list-item>-->
-
         <v-list-item
             link
             to="/">
@@ -66,7 +39,6 @@
         <v-list-item
             link
             to="/bots">
-
           <v-list-item-title>
             <v-icon>mdi-image</v-icon>
             Агенты
@@ -74,18 +46,30 @@
         </v-list-item>
 
         <v-list-item
-            link
-            to="/project">
-
+            link to="/about-the-project">
           <v-list-item-title>
             <v-icon>mdi-help-box</v-icon>
             О проекте
           </v-list-item-title>
         </v-list-item>
 
+        <v-divider></v-divider>
 
+        <v-list-item link v-if="isAuth" to="/profile">
+          <v-list-item-title>
+            <v-icon>mdi-view-dashboard</v-icon>
+            Профиль
+          </v-list-item-title>
+        </v-list-item>
 
-        <v-list-item link v-if="isAuth" @click="logoutProfile()">
+        <v-list-item link v-else :to="'/login'">
+          <v-list-item-title>
+            <v-icon>mdi-view-dashboard</v-icon>
+            Войти
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link v-if="isAuth" to="/logout">
           <v-list-item-title>
             <v-icon>mdi-view-dashboard</v-icon>
             Выйти
@@ -116,7 +100,7 @@ export default {
     ...mapActions({
       logout: "profile/logout"
     }),
-    logoutProfile(){
+    logoutProfile() {
       this.logout()
     }
   }

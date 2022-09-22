@@ -30,13 +30,11 @@ export const profileStore = {
                     "type-client": "front"
                 },
             }).then(value => {
-                console.log(value);
                 commit("setTokenAuth", value.data.token)
                 commit("setIsAuth", true)
                 dispatch("loadProfile")
                 ok();
             }).catch(reason => {
-                console.log(reason)
                 error();
             })
         },
@@ -53,10 +51,8 @@ export const profileStore = {
                     "token": state.tokenAuth
                 },
             }).then(value => {
-                console.log(value);
                 commit("setUserData", value.data)
             }).catch(reason => {
-                console.log(reason)
             })
         }
     },
