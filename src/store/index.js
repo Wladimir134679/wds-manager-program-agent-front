@@ -1,5 +1,6 @@
 import {createStore} from 'vuex'
 import {profileStore} from "./ProfileStore"
+import {programAgents} from "@/store/ProgramAgentsStore";
 
 export default createStore({
     state: {},
@@ -7,6 +8,7 @@ export default createStore({
     mutations: {},
     actions: {},
     modules: {
-        profile: profileStore
+        profile: profileStore,
+        programAgents: programAgents
     }
 })

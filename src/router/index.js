@@ -4,6 +4,8 @@ import LoginView from "@/views/LoginView";
 import ProfileView from "@/views/ProfileView";
 import AboutTheProject from "@/views/AboutTheProject";
 import LogoutView from "@/views/LogoutView";
+import ProgramAgentListView from "@/views/ProgramAgentListView";
+import ProgramAgentView from "@/views/ProgramAgentView";
 
 
 const routes = [
@@ -31,6 +33,16 @@ const routes = [
     path: '/logout',
     name: 'logout',
     component: LogoutView
+  },
+  {
+    path: '/program-agents',
+    name: 'programAgents',
+    component: ProgramAgentListView
+  },
+  {
+    path: '/program-agent/:id',
+    name: 'programAgentsId',
+    component: ProgramAgentView
   },
 ]
 

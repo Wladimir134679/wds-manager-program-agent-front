@@ -31,6 +31,11 @@
                   placeholder="Введите свой пароль">
 
               </v-text-field>
+              <v-row v-if="!!errorText">
+                <v-col>
+                  {{errorText}}
+                </v-col>
+              </v-row>
               <v-btn
                   :loading="loading"
                   type="submit"
@@ -61,6 +66,7 @@ export default {
       email: null,
       password: null,
       showPassword: false,
+      errorText: undefined,
       rules: {
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -80,11 +86,14 @@ export default {
       console.log(this.password + " : " + this.email)
       this.login({email: this.email, password: this.password, ok: this.ok, error: this.error})
     },
-    ok(){
+    ok(value){
       this.loading = false
       this.$router.push("/")
     },
-    error(){
+    error(r){
+      console.log(r)
+      this.errorText = r;
+      this.errorText += " / " + r.response.data.message
       this.loading = false
     }
   }

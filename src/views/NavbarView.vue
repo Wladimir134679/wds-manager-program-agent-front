@@ -38,7 +38,7 @@
 
         <v-list-item
             link
-            to="/bots">
+            to="/program-agents">
           <v-list-item-title>
             <v-icon>mdi-image</v-icon>
             Агенты

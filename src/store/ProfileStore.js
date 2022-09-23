@@ -1,10 +1,10 @@
 import config from "@/api/config";
+import api from "@/api/api";
 import axios from "axios";
 
 export const profileStore = {
     state: () => ({
         isAuth: false,
-        tokenAuth: undefined,
         userData: undefined
     }),
     getters: {},
@@ -12,30 +12,19 @@ export const profileStore = {
         setIsAuth(state, auth) {
             state.isAuth = auth;
         },
-        setTokenAuth(state, token) {
-            state.tokenAuth = token;
-        },
         setUserData(state, userData) {
             state.userData = userData;
         }
     },
     actions: {
         login({state, commit, dispatch}, {email, password, ok, error}) {
-            const apiLogin = config.api + '/user/login';
-            axios.post(apiLogin, {
-                email: email,
-                password: password
-            }, {
-                headers: {
-                    "type-client": "front"
-                },
-            }).then(value => {
-                commit("setTokenAuth", value.data.token)
-                commit("setIsAuth", true)
-                dispatch("loadProfile")
-                ok();
-            }).catch(reason => {
-                error();
+            api.login(email, password, function (value) {
+                commit("setIsAuth", true);
+                dispatch("loadProfile");
+                ok(value);
+            }, function (r) {
+                console.log("Error LOGIN")
+                error(r);
             })
         },
         logout({state, commit}){
@@ -44,15 +33,10 @@ export const profileStore = {
             commit("setUserData", undefined)
         },
         loadProfile({state, commit}) {
-            const apiLogin = config.api + '/user/profile';
-            axios.get(apiLogin, {
-                headers: {
-                    "type-client": "front",
-                    "token": state.tokenAuth
-                },
-            }).then(value => {
+            api.loadUserProfile(function (value) {
                 commit("setUserData", value.data)
-            }).catch(reason => {
+            }, function (r) {
+
             })
         }
     },
