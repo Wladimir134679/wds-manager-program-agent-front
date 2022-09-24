@@ -6,9 +6,13 @@ import AboutTheProject from "@/views/AboutTheProject";
 import LogoutView from "@/views/LogoutView";
 import ProgramAgentListView from "@/views/ProgramAgentListView";
 import ProgramAgentView from "@/views/ProgramAgentView";
+import CreateProgramAgentView from "@/views/CreateProgramAgentView";
+import NotFoundView from "@/views/NotFoundView";
+import RegistrationView from "@/views/RegistrationView";
 
 
 const routes = [
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
   {
     path: '/',
     name: 'home',
@@ -18,6 +22,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
+  },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: RegistrationView
   },
   {
     path: '/profile',
@@ -35,13 +44,18 @@ const routes = [
     component: LogoutView
   },
   {
+    path: '/create-program-agent',
+    name: 'createProgramAgent',
+    component: CreateProgramAgentView
+  },
+  {
     path: '/program-agents',
     name: 'programAgents',
     component: ProgramAgentListView
   },
   {
     path: '/program-agent/:id',
-    name: 'programAgentsId',
+    name: 'programAgentId',
     component: ProgramAgentView
   },
 ]

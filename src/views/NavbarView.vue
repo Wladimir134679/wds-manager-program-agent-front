@@ -62,19 +62,27 @@
           </v-list-item-title>
         </v-list-item>
 
-        <v-list-item link v-else :to="'/login'">
-          <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
-            Войти
-          </v-list-item-title>
-        </v-list-item>
-
         <v-list-item link v-if="isAuth" to="/logout">
           <v-list-item-title>
             <v-icon>mdi-view-dashboard</v-icon>
             Выйти
           </v-list-item-title>
         </v-list-item>
+
+        <v-list-item link v-if="!isAuth" to="/registration">
+          <v-list-item-title>
+            <v-icon>mdi-view-dashboard</v-icon>
+            Регистрация
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link v-if="!isAuth" :to="'/login'">
+          <v-list-item-title>
+            <v-icon>mdi-view-dashboard</v-icon>
+            Войти
+          </v-list-item-title>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
   </v-container>

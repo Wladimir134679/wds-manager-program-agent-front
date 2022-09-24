@@ -3,9 +3,11 @@ import axios from "axios";
 
 const apiLogin = config.api + '/user/login';
 const apiLoadProfile = config.api + '/user/profile';
+const apiUserRegistration = config.api + '/user/registration';
 
 const apiLoadAllProgramAgents = config.api + '/user/agent/all';
 const apiLoadInfoProgramAgents = config.api + '/user/agent';
+const apiCreateProgramAgent= config.api + '/user/agent/create';
 
 const api = {
     token: undefined,
@@ -39,6 +41,17 @@ const api = {
             error(reason);
         })
     },
+    registration(data, ok, error){
+        axios.post(apiUserRegistration, data, {
+            headers: {
+                "type-client": "front"
+            },
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    },
     loadUserProfile: function (ok, error) {
         this.executeDefault(apiLoadProfile, ok, error);
     },
@@ -46,7 +59,7 @@ const api = {
         this.executeDefault(apiLoadAllProgramAgents, ok, error);
     },
     loadInfoProgramAgents: function (id, ok, error) {
-        axios.get(path, {
+        axios.get(apiLoadInfoProgramAgents, {
             params:{
                 id: id
             },
@@ -56,7 +69,17 @@ const api = {
         }).catch(reason => {
             error(reason)
         })
+    },
+    createProgramAgent(data, ok, error){
+        axios.post(apiCreateProgramAgent, data, {
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
     }
 }
+
 
 export default api

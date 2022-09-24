@@ -1,12 +1,12 @@
 <template>
-  <v-container>
+  <v-container v-if="!!agentInfo">
     <v-row>
       <v-col>
         <program-agent-description :bot="agentInfo"/>
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="v-col-md-5 v-col-12">
+      <v-col class="v-col-md-5 v-col-12" v-if="isAdmin">
         <v-card>
           <v-card-title>
             Токен для серверов
@@ -53,7 +53,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col class="v-col-12">
         <v-card>
           <v-card-title>
             График
@@ -70,10 +70,13 @@
 <script>
 import {mapGetters, mapState} from "vuex"
 import ProgramAgentDescription from "@/components/ProgramAgentDescription";
+import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
+import userProfileData from "@/mixins/userProfileData";
 
 export default {
   name: "ProgramAgentView",
   components: {ProgramAgentDescription},
+  mixins: [isAuthViewRedirect, userProfileData],
   data(){
     return{
       showToken: true
@@ -87,6 +90,8 @@ export default {
       return this.$route.params.id;
     },
     agentInfo() {
+      if(this.programAgentsList === undefined)
+        return undefined
       for (const agentsListKey in this.programAgentsList.agents) {
         const agent = this.programAgentsList.agents[agentsListKey];
         console.log(agent)

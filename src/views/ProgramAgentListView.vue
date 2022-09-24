@@ -15,6 +15,20 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row v-if="isAuth && isAdmin">
+      <v-col>
+        <v-card>
+          <v-card-title>
+            Создать нового бота?
+          </v-card-title>
+          <v-card-actions>
+            <v-btn block variant="outlined" to="/create-program-agent">
+              Создать
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-row v-if="programAgentsList === undefined">
       <v-col>
         <v-progress-linear indeterminate
@@ -34,10 +48,12 @@
 <script>
 import ProgramAgentDescription from "@/components/ProgramAgentDescription";
 import {mapState, mapMutations, mapGetters, mapActions} from "vuex"
+import userProfileData from "@/mixins/userProfileData";
 
 export default {
   name: "ProgramAgentListView",
   components: {ProgramAgentDescription},
+  mixins: [userProfileData],
   data() {
     return {
       loadingProcess: false
