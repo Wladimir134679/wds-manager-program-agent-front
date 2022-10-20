@@ -8,6 +8,7 @@ const apiUserRegistration = config.api + '/user/registration';
 const apiLoadAllProgramAgents = config.api + '/user/agent/all';
 const apiLoadInfoProgramAgents = config.api + '/user/agent';
 const apiCreateProgramAgent= config.api + '/user/agent/create';
+const apiLoadHealthInfoProgramAgent = config.api + '/user/agent/health';
 
 const api = {
     token: undefined,
@@ -53,6 +54,18 @@ const api = {
     },
     loadInfoProgramAgents: function (id, ok, error) {
         axios.get(apiLoadInfoProgramAgents, {
+            params:{
+                id: id
+            },
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    },
+    loadHealthInfoProgramAgents: function (id, ok, error) {
+        axios.get(apiLoadHealthInfoProgramAgent, {
             params:{
                 id: id
             },

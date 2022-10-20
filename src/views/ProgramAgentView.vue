@@ -13,6 +13,9 @@
         <program-agent-management-runtime :program-agent="agentInfo"/>
       </v-col>
       <v-col class="v-col-12">
+        <program-agent-health-info-card :program-agent="agentInfo"/>
+      </v-col>
+      <v-col class="v-col-12">
         <v-card>
           <v-card-title>
             График
@@ -28,35 +31,49 @@
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex"
+import {mapGetters, mapState, mapActions} from "vuex"
 import ProgramAgentDescription from "@/components/ProgramAgentDescription";
 import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
 import userProfileData from "@/mixins/userProfileData";
 import ProgramAgentTokenVisible from "@/components/ProgramAgentTokenVisible";
 import ProgramAgentManagementRuntime from "@/components/ProgramAgentManagementRuntime";
+import ProgramAgentHealthInfoCard from "@/components/ProgramAgentHealthInfoCard";
 
 export default {
   name: "ProgramAgentView",
-  components: {ProgramAgentManagementRuntime, ProgramAgentTokenVisible, ProgramAgentDescription},
+  components: {
+    ProgramAgentHealthInfoCard,
+    ProgramAgentManagementRuntime, ProgramAgentTokenVisible, ProgramAgentDescription},
   mixins: [isAuthViewRedirect, userProfileData],
+  mounted() {
+    this.loadHealth({
+      id: this.getAgentId,
+      ok: function () {
+        console.log("Load health ok")
+      },
+      error: function () {
+        console.log("Error health load")
+      }
+    })
+  },
   computed: {
     ...mapState({
       programAgentsList: state => state.programAgents.programAgents,
     }),
+    ...mapGetters({
+      getAgentInfo: "programAgents/getAgentInfo"
+    }),
+    agentInfo(){
+      return this.getAgentInfo(this.getAgentId)
+    },
     getAgentId() {
       return this.$route.params.id;
     },
-    agentInfo() {
-      if(this.programAgentsList === undefined)
-        return undefined
-      for (const agentsListKey in this.programAgentsList) {
-        const agent = this.programAgentsList[agentsListKey];
-        console.log(agent)
-        if (agent.id == this.getAgentId) {
-          return agent
-        }
-      }
-    }
+  },
+  methods: {
+    ...mapActions({
+      loadHealth: "programAgents/loadHealth"
+    })
   }
 }
 </script>
