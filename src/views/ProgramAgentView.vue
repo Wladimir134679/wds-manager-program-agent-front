@@ -7,51 +7,10 @@
     </v-row>
     <v-row>
       <v-col class="v-col-md-5 v-col-12" v-if="isAdmin">
-        <v-card>
-          <v-card-title>
-            Токен для серверов
-          </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col class="v-col-md-6 v-col-12">
-                <span v-if="showToken">*****************</span>
-                <span v-else>{{agentInfo.token}}</span>
-              </v-col>
-              <v-col class="v-col-md-6 v-col-12">
-                <v-btn @click="showToken = !showToken" block variant="outlined">
-                  <span v-if="showToken">Показать</span>
-                  <span v-else>Скрыть</span>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+        <program-agent-token-visible :program-agent="agentInfo"/>
       </v-col>
       <v-col class="v-col-md-7 v-col-12">
-        <v-card>
-          <v-card-title>
-            Управление
-          </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col class="v-col-4">
-                <v-btn block variant="outlined">
-                  Запустить
-                </v-btn>
-              </v-col>
-              <v-col class="v-col-4">
-                <v-btn block variant="outlined">
-                  Остановить
-                </v-btn>
-              </v-col>
-              <v-col class="v-col-4">
-                <v-btn block variant="outlined">
-                  Перезапустить
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+        <program-agent-management-runtime :program-agent="agentInfo"/>
       </v-col>
       <v-col class="v-col-12">
         <v-card>
@@ -64,6 +23,7 @@
         </v-card>
       </v-col>
     </v-row>
+<!--    v-row>(v-col.v-col-12>v-card>v-card-title{Новый блок }>lorem4^v-card-text{Тут много текста}>(lorem20+br+br)*4)*5-->
   </v-container>
 </template>
 
@@ -72,16 +32,13 @@ import {mapGetters, mapState} from "vuex"
 import ProgramAgentDescription from "@/components/ProgramAgentDescription";
 import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
 import userProfileData from "@/mixins/userProfileData";
+import ProgramAgentTokenVisible from "@/components/ProgramAgentTokenVisible";
+import ProgramAgentManagementRuntime from "@/components/ProgramAgentManagementRuntime";
 
 export default {
   name: "ProgramAgentView",
-  components: {ProgramAgentDescription},
+  components: {ProgramAgentManagementRuntime, ProgramAgentTokenVisible, ProgramAgentDescription},
   mixins: [isAuthViewRedirect, userProfileData],
-  data(){
-    return{
-      showToken: true
-    }
-  },
   computed: {
     ...mapState({
       programAgentsList: state => state.programAgents.programAgents,
@@ -92,8 +49,8 @@ export default {
     agentInfo() {
       if(this.programAgentsList === undefined)
         return undefined
-      for (const agentsListKey in this.programAgentsList.agents) {
-        const agent = this.programAgentsList.agents[agentsListKey];
+      for (const agentsListKey in this.programAgentsList) {
+        const agent = this.programAgentsList[agentsListKey];
         console.log(agent)
         if (agent.id == this.getAgentId) {
           return agent

@@ -12,6 +12,11 @@
           <v-card-text v-else>
             Обще доступные боты
           </v-card-text>
+          <v-card-actions>
+            <v-btn :disabled="loadingProcess" block variant="outlined" @click="updateAgents">
+              Обновить список
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -38,7 +43,7 @@
       </v-col>
     </v-row>
     <v-row v-if="!!programAgentsList">
-      <v-col class="v-col-12 v-col-md-6" v-for="agent in programAgentsList.agents" key="agent.id">
+      <v-col class="v-col-12 v-col-md-6" v-for="agent in programAgentsList" key="agent.id">
         <program-agent-description :bot="agent" :preview="true" :link="'/program-agent/' + agent.id"/>
       </v-col>
     </v-row>
@@ -79,6 +84,9 @@ export default {
           this.loadingProcess = false
         }
       })
+    },
+    updateAgents(){
+      this.loadAgents()
     }
   },
   mounted() {

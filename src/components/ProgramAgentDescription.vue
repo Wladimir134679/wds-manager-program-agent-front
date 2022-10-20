@@ -1,7 +1,12 @@
 <template>
   <v-card v-if="!!bot">
-    <v-card-title>
-      {{ bot.name }}
+    <v-card-title class=" d-flex justify-space-between">
+      <span>
+        {{ bot.name }}
+        <span v-if="bot.online" style="color: green">Online</span>
+      </span>
+      <v-btn v-if="!preview" icon="mdi-reload" size="small">
+      </v-btn>
     </v-card-title>
     <v-card-text>
       {{ bot.description }}
@@ -19,8 +24,8 @@
     </v-card-text>
     <v-card-actions v-if="preview">
       <v-row>
-        <v-col>
-          <v-btn block color="green" variant="outlined" :to="link">
+        <v-col class="v-col-12">
+          <v-btn block variant="outlined" :to="link">
             Просмотреть подробно
           </v-btn>
         </v-col>
@@ -33,8 +38,7 @@
 export default {
   name: "ProgramAgentDescription",
   data() {
-    return {
-    }
+    return {}
   },
   props: {
     bot: Object,

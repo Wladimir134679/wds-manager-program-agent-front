@@ -57,28 +57,28 @@
 
         <v-list-item link v-if="isAuth" to="/profile">
           <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>mdi-account-box</v-icon>
             Профиль
           </v-list-item-title>
         </v-list-item>
 
         <v-list-item link v-if="isAuth" to="/logout">
           <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>mdi-account-minus</v-icon>
             Выйти
           </v-list-item-title>
         </v-list-item>
 
         <v-list-item link v-if="!isAuth" to="/registration">
           <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>mdi-account-multiple-plus</v-icon>
             Регистрация
           </v-list-item-title>
         </v-list-item>
 
         <v-list-item link v-if="!isAuth" :to="'/login'">
           <v-list-item-title>
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>mdi-account-plus</v-icon>
             Войти
           </v-list-item-title>
         </v-list-item>

@@ -13,7 +13,6 @@ const api = {
     token: undefined,
     getHeadersLogin: function () {
         return {
-            "type-client": "front",
             "token": this.token
         }
     },
@@ -31,9 +30,6 @@ const api = {
             email: email,
             password: password
         }, {
-            headers: {
-                "type-client": "front"
-            },
         }).then(value => {
             this.token = value.data.token;
             ok(value);
@@ -43,9 +39,6 @@ const api = {
     },
     registration(data, ok, error){
         axios.post(apiUserRegistration, data, {
-            headers: {
-                "type-client": "front"
-            },
         }).then(value => {
             ok(value)
         }).catch(reason => {
