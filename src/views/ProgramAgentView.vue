@@ -6,14 +6,14 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="v-col-md-5 v-col-12" v-if="isAdmin">
+      <v-col class="v-col-12" v-if="isAdmin">
         <program-agent-token-visible :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-md-7 v-col-12">
-        <program-agent-management-runtime :program-agent="agentInfo"/>
+      <v-col class="v-col-12">
+        <program-agent-data-health-info-card :program-agent="agentInfo"/>
       </v-col>
       <v-col class="v-col-12">
-        <program-agent-health-info-card :program-agent="agentInfo"/>
+        <program-agent-server-health-info-card :program-agent="agentInfo"/>
       </v-col>
       <v-col class="v-col-12">
         <v-card>
@@ -26,7 +26,7 @@
         </v-card>
       </v-col>
     </v-row>
-<!--    v-row>(v-col.v-col-12>v-card>v-card-title{Новый блок }>lorem4^v-card-text{Тут много текста}>(lorem20+br+br)*4)*5-->
+    <!--    v-row>(v-col.v-col-12>v-card>v-card-title{Новый блок }>lorem4^v-card-text{Тут много текста}>(lorem20+br+br)*4)*5-->
   </v-container>
 </template>
 
@@ -36,14 +36,15 @@ import ProgramAgentDescription from "@/components/ProgramAgentDescription";
 import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
 import userProfileData from "@/mixins/userProfileData";
 import ProgramAgentTokenVisible from "@/components/ProgramAgentTokenVisible";
-import ProgramAgentManagementRuntime from "@/components/ProgramAgentManagementRuntime";
-import ProgramAgentHealthInfoCard from "@/components/ProgramAgentHealthInfoCard";
+import ProgramAgentServerHealthInfoCard from "@/components/ProgramAgentServerHealthInfoCard";
+import ProgramAgentDataHealthInfoCard from "@/components/ProgramAgentDataHealthInfoCard";
 
 export default {
   name: "ProgramAgentView",
   components: {
-    ProgramAgentHealthInfoCard,
-    ProgramAgentManagementRuntime, ProgramAgentTokenVisible, ProgramAgentDescription},
+    ProgramAgentDataHealthInfoCard,
+    ProgramAgentServerHealthInfoCard, ProgramAgentTokenVisible, ProgramAgentDescription
+  },
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
     this.loadHealth({
@@ -63,7 +64,7 @@ export default {
     ...mapGetters({
       getAgentInfo: "programAgents/getAgentInfo"
     }),
-    agentInfo(){
+    agentInfo() {
       return this.getAgentInfo(this.getAgentId)
     },
     getAgentId() {

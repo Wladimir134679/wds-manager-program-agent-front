@@ -10,6 +10,10 @@ const apiLoadInfoProgramAgents = config.api + '/user/agent';
 const apiCreateProgramAgent= config.api + '/user/agent/create';
 const apiLoadHealthInfoProgramAgent = config.api + '/user/agent/health';
 
+
+const apiStartProgramAgent = config.api + '/user/agent/start';
+const apiStopProgramAgent = config.api + '/user/agent/stop';
+
 const api = {
     token: undefined,
     getHeadersLogin: function () {
@@ -84,7 +88,31 @@ const api = {
         }).catch(reason => {
             error(reason)
         })
-    }
+    },
+    startProgramAgent: function (id, ok, error) {
+        axios.get(apiStartProgramAgent, {
+            params:{
+                id: id
+            },
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    },
+    stopProgramAgent: function (id, ok, error) {
+    axios.get(apiStopProgramAgent, {
+        params:{
+            id: id
+        },
+        headers: this.getHeadersLogin(),
+    }).then(value => {
+        ok(value)
+    }).catch(reason => {
+        error(reason)
+    })
+},
 }
 
 
