@@ -7,12 +7,15 @@ const apiUserRegistration = config.api + '/user/registration';
 
 const apiLoadAllProgramAgents = config.api + '/user/agent/all';
 const apiLoadInfoProgramAgents = config.api + '/user/agent';
-const apiCreateProgramAgent= config.api + '/user/agent/create';
+const apiCreateProgramAgent = config.api + '/user/agent/create';
 const apiLoadHealthInfoProgramAgent = config.api + '/user/agent/health';
 
 
 const apiStartProgramAgent = config.api + '/user/agent/start';
 const apiStopProgramAgent = config.api + '/user/agent/stop';
+
+const apiProgramAgentChartsPreview = config.api + '/user/agent/charts/preview';
+const apiProgramAgentChartData = config.api + '/user/agent/chart';
 
 const api = {
     token: undefined,
@@ -34,17 +37,15 @@ const api = {
         axios.post(apiLogin, {
             email: email,
             password: password
-        }, {
-        }).then(value => {
+        }, {}).then(value => {
             this.token = value.data.token;
             ok(value);
         }).catch(reason => {
             error(reason);
         })
     },
-    registration(data, ok, error){
-        axios.post(apiUserRegistration, data, {
-        }).then(value => {
+    registration(data, ok, error) {
+        axios.post(apiUserRegistration, data, {}).then(value => {
             ok(value)
         }).catch(reason => {
             error(reason)
@@ -58,7 +59,7 @@ const api = {
     },
     loadInfoProgramAgents: function (id, ok, error) {
         axios.get(apiLoadInfoProgramAgents, {
-            params:{
+            params: {
                 id: id
             },
             headers: this.getHeadersLogin(),
@@ -70,7 +71,7 @@ const api = {
     },
     loadHealthInfoProgramAgents: function (id, ok, error) {
         axios.get(apiLoadHealthInfoProgramAgent, {
-            params:{
+            params: {
                 id: id
             },
             headers: this.getHeadersLogin(),
@@ -80,7 +81,7 @@ const api = {
             error(reason)
         })
     },
-    createProgramAgent(data, ok, error){
+    createProgramAgent(data, ok, error) {
         axios.post(apiCreateProgramAgent, data, {
             headers: this.getHeadersLogin(),
         }).then(value => {
@@ -91,7 +92,7 @@ const api = {
     },
     startProgramAgent: function (id, ok, error) {
         axios.get(apiStartProgramAgent, {
-            params:{
+            params: {
                 id: id
             },
             headers: this.getHeadersLogin(),
@@ -102,17 +103,44 @@ const api = {
         })
     },
     stopProgramAgent: function (id, ok, error) {
-    axios.get(apiStopProgramAgent, {
-        params:{
-            id: id
-        },
-        headers: this.getHeadersLogin(),
-    }).then(value => {
-        ok(value)
-    }).catch(reason => {
-        error(reason)
-    })
-},
+        axios.get(apiStopProgramAgent, {
+            params: {
+                id: id
+            },
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    },
+    getAllChartsPreview: function (id, ok, error) {
+        axios.get(apiProgramAgentChartsPreview, {
+            params: {
+                id: id
+            },
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    },
+    getChartData: function (id, name, from, to, ok, error) {
+        axios.get(apiProgramAgentChartData, {
+            params: {
+                id: id,
+                name: name,
+                from: from,
+                to: to,
+            },
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    },
 }
 
 

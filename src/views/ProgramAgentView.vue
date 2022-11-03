@@ -15,15 +15,8 @@
       <v-col class="v-col-12">
         <program-agent-server-health-info-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-12">
-        <v-card>
-          <v-card-title>
-            График
-          </v-card-title>
-          <v-card-text>
-            AR<br>AR<br>AR<br>AR<br>AR<br>AR<br>AR<br>AR<br>AR<br>
-          </v-card-text>
-        </v-card>
+      <v-col class="v-col-12" v-if="previewCharts !== undefined">
+        <program-agent-chart-timestamp-view-card v-for="preview in previewCharts" :key="preview" :program-agent="agentInfo" :preview="preview"/>
       </v-col>
     </v-row>
     <!--    v-row>(v-col.v-col-12>v-card>v-card-title{Новый блок }>lorem4^v-card-text{Тут много текста}>(lorem20+br+br)*4)*5-->
@@ -38,12 +31,19 @@ import userProfileData from "@/mixins/userProfileData";
 import ProgramAgentTokenVisible from "@/components/ProgramAgentTokenVisible";
 import ProgramAgentServerHealthInfoCard from "@/components/ProgramAgentServerHealthInfoCard";
 import ProgramAgentDataHealthInfoCard from "@/components/ProgramAgentDataHealthInfoCard";
+import ProgramAgentChartTimestampViewCard from "@/components/ProgramAgentChartTimestampViewCard";
+import api from "@/api/api";
 
 export default {
   name: "ProgramAgentView",
+  data() {
+    return {
+      previewCharts: undefined
+    }
+  },
   components: {
     ProgramAgentDataHealthInfoCard,
-    ProgramAgentServerHealthInfoCard, ProgramAgentTokenVisible, ProgramAgentDescription
+    ProgramAgentServerHealthInfoCard, ProgramAgentTokenVisible, ProgramAgentDescription, ProgramAgentChartTimestampViewCard
   },
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
@@ -56,6 +56,7 @@ export default {
         console.log("Error health load")
       }
     })
+    this.loadChartsPreview()
   },
   computed: {
     ...mapState({
@@ -74,7 +75,16 @@ export default {
   methods: {
     ...mapActions({
       loadHealth: "programAgents/loadHealth"
-    })
+    }),
+    loadChartsPreview(){
+      return api.getAllChartsPreview(this.getAgentId, (result) => {
+        console.log(result)
+        console.log(result.body)
+        this.previewCharts = result.data
+      }, (error) =>{
+        console.log(error)
+      })
+    }
   }
 }
 </script>
