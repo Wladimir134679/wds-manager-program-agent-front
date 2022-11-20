@@ -50,31 +50,36 @@
 <script>
 import userProfileData from "@/mixins/userProfileData";
 import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
-import userApi from "@/api/userApi";
+import {mapGetters, mapState, mapActions} from "vuex"
 
 export default {
   name: "UsersListView",
   mixins: [userProfileData, isAuthViewRedirect],
   data() {
     return {
-      users: [],
       findField: "",
     }
   },
   mounted() {
-    userApi.getAllUserList((result) => {
-      this.users = result.data
-    }, (error) => {
-      console.log('Error load users')
-      console.log(error)
-    })
+    this.loadUsers({ok: ()=>{}, error: ()=>{}})
   },
-  computed:{
-    usersFilter(){
+  computed: {
+    ...mapGetters({
+      users: "users/getUsersList",
+      userInfo: "users/getUserById"
+    }),
+    usersFilter() {
+      if(!!this.users)
       return this.users.filter((user) => {
         return JSON.stringify(user).toLowerCase().includes(this.findField.toLowerCase());
       });
+      return this.users
     }
+  },
+  methods: {
+    ...mapActions({
+      loadUsers: "users/load"
+    })
   }
 }
 </script>

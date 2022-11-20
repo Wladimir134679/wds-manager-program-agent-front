@@ -1,5 +1,20 @@
 <template>
   <v-container>
+    <v-row v-if="isAuth && isAdmin">
+      <v-col>
+        <v-card>
+          <v-card-title>
+            Создать нового бота?
+          </v-card-title>
+          <v-card-actions>
+            <v-btn block variant="outlined" to="/create-program-agent">
+              Создать
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col>
         <v-card>
@@ -20,21 +35,6 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row v-if="isAuth && isAdmin">
-      <v-col>
-        <v-card>
-          <v-card-title>
-            Создать нового бота?
-          </v-card-title>
-          <v-card-actions>
-            <v-btn block variant="outlined" to="/create-program-agent">
-              Создать
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-
 
     <v-row>
       <v-col>

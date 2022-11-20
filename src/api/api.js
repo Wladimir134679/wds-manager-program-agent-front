@@ -16,6 +16,7 @@ const apiStopProgramAgent = config.api + '/user/agent/stop';
 
 const apiProgramAgentChartsPreview = config.api + '/user/agent/charts/preview';
 const apiProgramAgentChartData = config.api + '/user/agent/chart';
+const apiAgentConnectUser = config.api + '/user/agent/connect';
 
 const api = {
     token: undefined,
@@ -141,6 +142,20 @@ const api = {
             error(reason)
         })
     },
+    agentConnectUser: function (id, customerId, developerId, ok, error){
+        axios.post(apiAgentConnectUser, {},{
+            params: {
+                id: id,
+                customerId: customerId,
+                developerId: developerId,
+            },
+            headers: this.getHeadersLogin(),
+        }).then(value => {
+            ok(value)
+        }).catch(reason => {
+            error(reason)
+        })
+    }
 }
 
 
