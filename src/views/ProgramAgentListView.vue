@@ -34,7 +34,17 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row v-if="programAgentsList === undefined">
+
+
+    <v-row>
+      <v-col>
+        <v-text-field placeholder="Поиск" v-model="findProgramAgent">
+
+        </v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="filterProgramAgentList === undefined">
       <v-col>
         <v-progress-linear indeterminate
                            color="green darken-10">
@@ -42,8 +52,8 @@
         </v-progress-linear>
       </v-col>
     </v-row>
-    <v-row v-if="!!programAgentsList">
-      <v-col class="v-col-12 v-col-md-6" v-for="agent in programAgentsList" key="agent.id">
+    <v-row v-if="!!filterProgramAgentList">
+      <v-col class="v-col-12 v-col-md-6" v-for="agent in filterProgramAgentList" key="agent.id">
         <program-agent-description :bot="agent" :preview="true" :link="'/program-agent/' + agent.id"/>
       </v-col>
     </v-row>
@@ -61,14 +71,23 @@ export default {
   mixins: [userProfileData],
   data() {
     return {
-      loadingProcess: false
+      loadingProcess: false,
+      findProgramAgent: ""
     }
   },
   computed: {
     ...mapState({
       programAgentsList: state => state.programAgents.programAgents,
       isAuth: state => state.profile.isAuth
-    })
+    }),
+    filterProgramAgentList() {
+      if(!!this.programAgentsList) {
+        return this.programAgentsList.filter((agent) => {
+          return JSON.stringify(agent).toLowerCase().includes(this.findProgramAgent.toLowerCase());
+        });
+      }
+      return this.programAgentsList
+    }
   },
   methods: {
     ...mapActions({
@@ -85,7 +104,7 @@ export default {
         }
       })
     },
-    updateAgents(){
+    updateAgents() {
       this.loadAgents()
     }
   },

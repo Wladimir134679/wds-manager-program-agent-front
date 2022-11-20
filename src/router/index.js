@@ -9,6 +9,7 @@ import ProgramAgentView from "@/views/ProgramAgentView";
 import CreateProgramAgentView from "@/views/CreateProgramAgentView";
 import NotFoundView from "@/views/NotFoundView";
 import RegistrationView from "@/views/RegistrationView";
+import UsersListView from "@/views/UsersListView";
 
 
 const routes = [
@@ -27,6 +28,11 @@ const routes = [
     path: '/registration',
     name: 'registration',
     component: RegistrationView
+  },
+  {
+    path: '/users-list',
+    name: 'usersList',
+    component: UsersListView
   },
   {
     path: '/profile',

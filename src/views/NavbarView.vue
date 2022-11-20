@@ -13,8 +13,8 @@
           <v-list-item-title class="text-h6">
             Панель управления
           </v-list-item-title>
-          <v-list-item-subtitle v-if="isAuth && !!userData">
-            <b>{{ userData.username }}</b> {{ userData.email }}
+          <v-list-item-subtitle v-if="isAuth && !!profileUser">
+            <b>{{ profileUser.username }}</b> {{ profileUser.email }}
           </v-list-item-subtitle>
           <v-list-item-subtitle v-else>
             Не авторизованны
@@ -42,6 +42,16 @@
           <v-list-item-title>
             <v-icon>mdi-image</v-icon>
             Агенты
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item
+            v-if="isAuth && isAdmin"
+            link
+            to="/users-list">
+          <v-list-item-title>
+            <v-icon>mdi-image</v-icon>
+            Пользователи
           </v-list-item-title>
         </v-list-item>
 
@@ -89,28 +99,19 @@
 </template>
 
 <script>
-import {mapState, mapMutations, mapActions} from "vuex"
+import userProfileData from "@/mixins/userProfileData";
 
 export default {
   name: "NavbarView",
+  mixins: [userProfileData],
   data() {
     return {
       drawer: true,
     }
   },
   computed: {
-    ...mapState({
-      isAuth: state => state.profile.isAuth,
-      userData: state => state.profile.userData
-    })
   },
   methods: {
-    ...mapActions({
-      logout: "profile/logout"
-    }),
-    logoutProfile() {
-      this.logout()
-    }
   }
 }
 </script>
