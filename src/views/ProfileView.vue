@@ -1,50 +1,147 @@
 <template>
-<v-container>
-  <v-card v-if="!!userData">
-    <v-card-title>
-      Данные профиля
-    </v-card-title>
-    <v-card-text>
-      <v-row>
-        <v-col cols="3">
-          <b>Имя</b>
-        </v-col>
-        <v-col>
-          {{userData.username}}
-        </v-col>
-      </v-row>
+  <v-container>
+    <v-row v-if="!!userData">
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>
+            Данные профиля
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols="3">
+                <b>Имя</b>
+              </v-col>
+              <v-col>
+                {{ userData.username }}
+              </v-col>
+            </v-row>
 
-      <v-row>
-        <v-col cols="3">
-          <b>Электронная почта</b>
-        </v-col>
-        <v-col>
-          {{userData.email}}
-        </v-col>
-      </v-row>
+            <v-row>
+              <v-col cols="3">
+                <b>Электронная почта</b>
+              </v-col>
+              <v-col>
+                {{ userData.email }}
+              </v-col>
+            </v-row>
 
-      <v-row>
-        <v-col cols="3">
-          <b>Роль</b>
-        </v-col>
-        <v-col>
-          {{userData.role}}
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
-</v-container>
+            <v-row>
+              <v-col cols="3">
+                <b>Роль</b>
+              </v-col>
+              <v-col>
+                {{ userData.role }}
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>
+            Контактные данные
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols="3">
+                <b>Предпочтительно использовать</b>
+              </v-col>
+              <v-col>
+                <b>Данные</b>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="3">
+                <v-btn block variant="outlined" :class="{'bg-blue': ifFavorite('TELEGRAM')}"
+                       @click="setFavorite('TELEGRAM')">
+                  Телеграм
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-text-field
+                    type="text"
+                    placeholder="@username ИЛИ ссылка"
+                    v-model="userData.contact.telegram"></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="3">
+                <v-btn block variant="outlined" :class="{'bg-blue': ifFavorite('VK')}" @click="setFavorite('VK')">
+                  ВКонтакте
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-text-field
+                    type="text"
+                    placeholder="@username ИЛИ ссылка"
+                    v-model="userData.contact.vk"></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="3">
+                <v-btn block variant="outlined" :class="{'bg-blue': ifFavorite('EMAIL')}" @click="setFavorite('EMAIL')">
+                  E-Mail
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-text-field
+                    type="text"
+                    placeholder="name@email.com"
+                    v-model="userData.contact.email"></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+                block
+                color="success"
+                variant="outlined"
+                @click="save"
+                :loading="saveContactLoad">
+              Сохранить
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import {mapGetters, mapState} from "vuex"
+import userApi from "@/api/userApi";
 
 export default {
   name: "ProfileView",
+  data() {
+    return {
+      saveContactLoad: false
+    }
+  },
   computed: {
     ...mapState({
       userData: (state) => state.profile.userData
     })
+  },
+  methods: {
+    save() {
+      console.log(this.userData)
+      this.saveContactLoad = true;
+      userApi.setContactData(this.userData.contact,
+          (ok) => {
+        this.saveContactLoad = false;
+      }, (err) => {
+        this.saveContactLoad = false;
+      })
+    },
+    ifFavorite(name) {
+      return !!this.userData.contact && !!this.userData.contact.favorite && this.userData.contact.favorite === name
+    },
+    setFavorite(name) {
+      this.userData.contact.favorite = name
+    }
   }
 }
 </script>

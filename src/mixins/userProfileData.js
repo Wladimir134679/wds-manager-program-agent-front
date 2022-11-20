@@ -7,7 +7,7 @@ export default {
             profileUser: state => state.profile.userData
         }),
         isAdmin(){
-            return this.profileUser.role === "ADMIN"
+            return !!this.profileUser && this.profileUser.role === "ADMIN"
         }
     },
     mounted() {
