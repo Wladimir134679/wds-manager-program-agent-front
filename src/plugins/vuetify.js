@@ -11,7 +11,7 @@ export default createVuetify({
         },
         defaults: {
             VCard: {
-                elevation: 4
+                elevation: 3
             }
         }
     }

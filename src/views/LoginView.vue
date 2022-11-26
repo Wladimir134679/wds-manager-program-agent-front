@@ -33,10 +33,11 @@
               </v-text-field>
               <v-row v-if="!!errorText">
                 <v-col>
-                  {{errorText}}
+                  {{ errorText }}
                 </v-col>
               </v-row>
               <v-btn
+                  :disabled="!valid"
                   :loading="loading"
                   type="submit"
                   color="success"
@@ -86,15 +87,14 @@ export default {
       console.log(this.password + " : " + this.email)
       this.login({email: this.email, password: this.password, ok: this.ok, error: this.error})
     },
-    ok(value){
+    ok(value) {
       this.loading = false
       this.$router.push("/")
     },
-    error(r){
-      console.log(r)
+    error(r) {
+      this.loading = false
       this.errorText = r;
       this.errorText += " / " + r.response.data.message
-      this.loading = false
     }
   }
 }

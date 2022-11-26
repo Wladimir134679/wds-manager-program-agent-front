@@ -6,20 +6,25 @@
     <v-card-text>
       {{ preview.description }}
     </v-card-text>
-<!--    <v-card-actions>-->
-<!--      От &#45;&#45;-->
-<!--      <input class="v-input" style="border: 3px blue;" type="date" v-model="preview.fromTime">-->
-<!--      До &#45;&#45;-->
-<!--      <input class="v-input" style="border: 3px blue;" type="date" v-model="preview.toTime">-->
-<!--      <v-btn-->
-<!--          type="submit"-->
-<!--          variant="outlined">-->
-<!--        Запросить-->
-<!--      </v-btn>-->
-<!--    </v-card-actions>-->
     <v-card-text>
-      <apexchart ref="chartTime" class="pa-5" width="100%" height="300" :series="seriesData" :options="options"/>
+      <apexchart ref="chartTime" class="pa-5" width="100%" height="300" :series="seriesDataFull" :options="options"/>
     </v-card-text>
+    <v-card-actions>
+      <v-btn block variant="outlined">
+        Во весь экран
+        <v-dialog activator="parent">
+          <v-card>
+            <v-card-title>
+              Title
+            </v-card-title>
+            <v-card-text>
+              <apexchart ref="chartTimeFull" class="pa-5" width="100%" height="500" :series="seriesDataFull"
+                         :options="options"/>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -40,9 +45,15 @@ export default {
     preview: Object
   },
   mounted() {
-    this.loadSeries()
+    if (this.programAgent.online)
+      this.loadSeries()
   },
   methods: {
+    updateChart() {
+      this.$refs.chartTimeFull.updateSeries([{
+        data: this.seriesData
+      }], false, true);
+    },
     loadSeries() {
       console.log(this.preview.fromTime)
       console.log(this.seriesData)
@@ -51,19 +62,13 @@ export default {
           this.preview.fromTime,
           this.preview.toTime,
           (ok) => {
-            console.log(ok)
             let points = ok.data.points
             for (const pointsKey in points) {
-              console.log(pointsKey)
-              console.log(points[pointsKey])
-              console.log(points[pointsKey].time)
-              console.log(new Date(points[pointsKey].time))
               this.seriesData.push({x: new Date(points[pointsKey].time), y: points[pointsKey].value})
             }
-            console.log(this.seriesData)
-            this.$refs.chartTime.updateSeries([{
-              data: this.seriesData
-            }], false, true);
+            // this.$refs.chartTime.updateSeries([{
+            //   data: this.seriesData
+            // }], false, true);
           },
           (err) => {
             console.log(err)
@@ -71,8 +76,11 @@ export default {
     },
   },
   computed: {
-    series() {
-      return this.seriesData
+    seriesDataFull() {
+      return [{
+        name: this.preview.name,
+        data: this.seriesData
+      }];
     },
     options() {
       return {

@@ -45,19 +45,19 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col cols="3">
-                <b>Предпочтительно использовать</b>
-              </v-col>
-              <v-col>
-                <b>Данные</b>
+              <v-col cols="12">
+                <v-radio-group label="Предпочтительно использовать" v-model="userData.contact.favorite">
+                  <v-radio label="Телеграм" value="TELEGRAM"></v-radio>
+                  <v-radio label="ВКонтакте" value="VK"></v-radio>
+                  <v-radio label="E-Mail" value="EMAIL"></v-radio>
+                </v-radio-group>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3">
-                <v-btn block variant="outlined" :class="{'bg-blue': ifFavorite('TELEGRAM')}"
-                       @click="setFavorite('TELEGRAM')">
+              <v-col class="v-col-md-3 v-col-12">
+                <b>
                   Телеграм
-                </v-btn>
+                </b>
               </v-col>
               <v-col>
                 <v-text-field
@@ -67,10 +67,10 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3">
-                <v-btn block variant="outlined" :class="{'bg-blue': ifFavorite('VK')}" @click="setFavorite('VK')">
+              <v-col class="v-col-md-3 v-col-12">
+                <b>
                   ВКонтакте
-                </v-btn>
+                </b>
               </v-col>
               <v-col>
                 <v-text-field
@@ -80,10 +80,10 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3">
-                <v-btn block variant="outlined" :class="{'bg-blue': ifFavorite('EMAIL')}" @click="setFavorite('EMAIL')">
+              <v-col class="v-col-md-3 v-col-12">
+                <b>
                   E-Mail
-                </v-btn>
+                </b>
               </v-col>
               <v-col>
                 <v-text-field

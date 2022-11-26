@@ -3,48 +3,72 @@
     <v-card-title>
       Управляющие люди
     </v-card-title>
-    <v-card-text>
-      <v-row>
-        <v-col>
-          <v-list>
-            <v-select clearable
-                      label="Заказчик"
-                      :items="usersList"
-                      item-title="username"
-                      persistent-hint
-                      return-object
-                      single-line
-                      v-model="customerSelect">
+    <div :hidden="hidden">
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-list>
+              <v-select clearable
+                        label="Заказчик"
+                        :items="usersList"
+                        item-title="username"
+                        persistent-hint
+                        return-object
+                        single-line
+                        v-model="customerSelect">
 
-            </v-select>
-          </v-list>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-list>
-            <v-select clearable
-                      label="Разработчик"
-                      :items="usersList"
-                      item-title="username"
-                      persistent-hint
-                      return-object
-                      single-line
-                      v-model="developerSelect">
+              </v-select>
+            </v-list>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-list>
+              <v-select clearable
+                        label="Разработчик"
+                        :items="usersList"
+                        item-title="username"
+                        persistent-hint
+                        return-object
+                        single-line
+                        v-model="developerSelect">
 
-            </v-select>
-          </v-list>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn
-          block
-          variant="outlined"
-          @click="saveUser">
-        Сохранить
-      </v-btn>
-    </v-card-actions>
+              </v-select>
+            </v-list>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-row>
+          <v-col cols="12">
+            <v-btn
+                block
+                variant="outlined"
+                @click="saveUser">
+              Сохранить
+            </v-btn>
+          </v-col>
+          <v-col cols="12">
+            <v-btn
+                block
+                variant="outlined"
+                @click="hidden = !hidden">
+              Закрыть
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-actions>
+    </div>
+    <div :hidden="!hidden">
+      <v-card-actions>
+        <v-btn
+            block
+            variant="outlined"
+            @click="hidden = !hidden">
+          Редактировать
+        </v-btn>
+      </v-card-actions>
+    </div>
   </v-card>
 </template>
 
@@ -59,7 +83,8 @@ export default {
   data() {
     return {
       customerSelect: undefined,
-      developerSelect: undefined
+      developerSelect: undefined,
+      defaultHidden: true
     }
   },
   props: {
@@ -72,6 +97,26 @@ export default {
       usersList: "users/getUsersList",
       userById: "users/getUserById"
     }),
+    hidden: {
+      get: function (){
+        return this.defaultHidden
+      },
+      set: function (val) {
+        this.defaultHidden = val
+        if (!val) {
+          if (this.usersList === undefined)
+            this.loadUsers({
+              ok: () => {
+                this.loadUserModel()
+              },
+              error: () => {
+              }
+            })
+          else
+            this.loadUserModel()
+        }
+      }
+    }
   },
   methods: {
     ...mapActions({
@@ -96,17 +141,7 @@ export default {
     }
   },
   mounted() {
-    if (this.usersList === undefined)
-      this.loadUsers({
-        ok: () => {
-          this.loadUserModel()
-        },
-        error: () => {
-        }
-      })
-    else
-      this.loadUserModel()
-  }
+  },
 }
 </script>
 

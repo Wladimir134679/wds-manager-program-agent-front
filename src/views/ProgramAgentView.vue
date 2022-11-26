@@ -1,26 +1,23 @@
 <template>
   <v-container v-if="!!agentInfo">
     <v-row>
-      <v-col>
+      <v-col class="v-col-md-6 v-col-12">
         <program-agent-description :bot="agentInfo"/>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col class="v-col-12" v-if="isAdmin">
+      <v-col class="v-col-md-6 v-col-12" v-if="isAdmin">
         <program-agent-token-visible :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-12">
+      <v-col class="v-col-md-6 v-col-12">
         <program-agent-user-manager-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-12">
+      <v-col class="v-col-md-6 v-col-12">
         <program-agent-data-health-info-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-12">
+      <v-col class="v-col-md-6 v-col-12">
         <program-agent-server-health-info-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-12" v-if="previewCharts !== undefined">
-        <program-agent-chart-timestamp-view-card v-for="preview in previewCharts" :key="preview"
-                                                 :program-agent="agentInfo" :preview="preview"/>
+      <v-col class="v-col-md-6 v-col-12" v-if="previewCharts !== undefined" v-for="preview in previewCharts" :key="preview">
+        <program-agent-chart-timestamp-view-card :program-agent="agentInfo" :preview="preview"/>
       </v-col>
     </v-row>
   </v-container>
@@ -55,16 +52,18 @@ export default {
   },
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
-    this.loadHealth({
-      id: this.getAgentId,
-      ok: function () {
-        console.log("Load health ok")
-      },
-      error: function () {
-        console.log("Error health load")
-      }
-    })
-    this.loadChartsPreview()
+    if(this.agentInfo.online) {
+      this.loadHealth({
+        id: this.getAgentId,
+        ok: function () {
+          console.log("Load health ok")
+        },
+        error: function () {
+          console.log("Error health load")
+        }
+      })
+      this.loadChartsPreview()
+    }
   },
   computed: {
     ...mapState({
