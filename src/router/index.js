@@ -10,6 +10,7 @@ import CreateProgramAgentView from "@/views/CreateProgramAgentView";
 import NotFoundView from "@/views/NotFoundView";
 import RegistrationView from "@/views/RegistrationView";
 import UsersListView from "@/views/UsersListView";
+import OrderAllListView from "@/views/OrderAllListView";
 
 
 const routes = [
@@ -63,6 +64,11 @@ const routes = [
     path: '/program-agent/:id',
     name: 'programAgentId',
     component: ProgramAgentView
+  },,
+  {
+    path: '/orders',
+    name: 'orders',
+    component: OrderAllListView
   },
 ]
 

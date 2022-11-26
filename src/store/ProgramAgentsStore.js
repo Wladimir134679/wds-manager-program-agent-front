@@ -7,6 +7,9 @@ export const programAgents = {
         programAgents: undefined,
     }),
     getters: {
+        getAll: (state) => {
+            return state.programAgents
+        },
         getAgentInfo: (state) => (agentId) => {
             if (state.programAgents === undefined)
                 return undefined

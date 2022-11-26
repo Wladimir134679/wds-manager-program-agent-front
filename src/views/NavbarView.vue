@@ -56,6 +56,16 @@
         </v-list-item>
 
         <v-list-item
+            v-if="isAuth"
+            link
+            to="/orders">
+          <v-list-item-title>
+            <v-icon>mdi-image</v-icon>
+            Заказы
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item
             link to="/about-the-project">
           <v-list-item-title>
             <v-icon>mdi-help-box</v-icon>

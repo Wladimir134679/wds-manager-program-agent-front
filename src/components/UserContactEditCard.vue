@@ -94,12 +94,6 @@ export default {
             this.saveContactLoad = false;
           })
     },
-    ifFavorite(name) {
-      return !!this.userData.contact && !!this.userData.contact.favorite && this.userData.contact.favorite === name
-    },
-    setFavorite(name) {
-      this.userData.contact.favorite = name
-    }
   }
 }
 </script>
