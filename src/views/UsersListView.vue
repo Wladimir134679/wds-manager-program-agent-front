@@ -10,38 +10,7 @@
     <v-row>
       <v-col class="v-col-md-6 v-col-12"
              v-for="user in usersFilter" :key="user.id">
-        <v-card>
-          <v-card-text>
-            <b>{{ user.username }}</b> {{ user.email }}
-          </v-card-text>
-          <v-card-text>
-            <v-row>
-              <v-col cols="3">
-                Имя:
-              </v-col>
-              <v-col>
-                {{ user.username }}
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="3">
-                Почта:
-              </v-col>
-              <v-col>
-                {{ user.email }}
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="3">
-                Роль:
-              </v-col>
-              <v-col>
-                {{ user.role }}
-              </v-col>
-            </v-row>
-
-          </v-card-text>
-        </v-card>
+        <user-profile-card :user-data="user"/>
       </v-col>
     </v-row>
   </v-container>
@@ -51,9 +20,11 @@
 import userProfileData from "@/mixins/userProfileData";
 import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
 import {mapGetters, mapState, mapActions} from "vuex"
+import UserProfileCard from "@/components/UserProfileCard";
 
 export default {
   name: "UsersListView",
+  components: {UserProfileCard},
   mixins: [userProfileData, isAuthViewRedirect],
   data() {
     return {
