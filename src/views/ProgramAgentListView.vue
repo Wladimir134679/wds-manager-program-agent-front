@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row v-if="isAuth && isAdmin">
-      <v-col>
+    <v-row>
+      <v-col class="v-col-12 v-col-md-6"  v-if="isAuth && isAdmin">
         <v-card>
           <v-card-title>
             Создать нового бота?
@@ -13,20 +13,15 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col>
+      <v-col class="v-col-12 v-col-md-6">
         <v-card>
-          <v-card-title>
-            Список программных агентов системы
-          </v-card-title>
-          <v-card-text v-if="isAuth">
+          <v-card-title v-if="isAuth">
             Все доступные Вам боты:
-          </v-card-text>
-          <v-card-text v-else>
+          </v-card-title>
+          <v-card-title v-else>
             Обще доступные боты
-          </v-card-text>
+          </v-card-title>
           <v-card-actions>
             <v-btn :disabled="loadingProcess" block variant="outlined" @click="updateAgents">
               Обновить список

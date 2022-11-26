@@ -40,7 +40,7 @@
                   :loading="loading"
                   type="submit"
                   color="success"
-                  variant="outlined"
+                  variant="tonal"
                   size="large"
                   block>
                 Войти
