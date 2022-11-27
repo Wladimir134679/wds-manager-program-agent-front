@@ -1,25 +1,47 @@
 <template>
   <v-container v-if="!!agentInfo">
+
     <v-row>
-      <v-col class="v-col-md-6 v-col-12">
+      <v-col :class="cardStyle">
         <program-agent-description :bot="agentInfo"/>
       </v-col>
-      <v-col class="v-col-md-6 v-col-12" v-if="isAdmin">
+      <v-col :class="cardStyle" v-if="isAdmin">
         <program-agent-token-visible :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-md-6 v-col-12">
+      <v-col :class="cardStyle">
         <program-agent-user-manager-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-md-6 v-col-12">
+      <v-col :class="cardStyle">
         <program-agent-data-health-info-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-md-6 v-col-12">
+      <v-col :class="cardStyle">
         <program-agent-server-health-info-card :program-agent="agentInfo"/>
       </v-col>
-      <v-col class="v-col-md-6 v-col-12" v-if="previewCharts !== undefined" v-for="preview in previewCharts" :key="preview">
+      <v-col :class="cardStyle" v-if="previewCharts !== undefined" v-for="preview in previewCharts" :key="preview">
         <program-agent-chart-timestamp-view-card :program-agent="agentInfo" :preview="preview"/>
       </v-col>
     </v-row>
+
+<!--    <v-row>-->
+<!--      <v-col class="v-col-md-6 v-col-12">-->
+<!--        <program-agent-description :bot="agentInfo"/>-->
+<!--      </v-col>-->
+<!--      <v-col class="v-col-md-6 v-col-12" v-if="isAdmin">-->
+<!--        <program-agent-token-visible :program-agent="agentInfo"/>-->
+<!--      </v-col>-->
+<!--      <v-col class="v-col-md-6 v-col-12">-->
+<!--        <program-agent-user-manager-card :program-agent="agentInfo"/>-->
+<!--      </v-col>-->
+<!--      <v-col class="v-col-md-6 v-col-12">-->
+<!--        <program-agent-data-health-info-card :program-agent="agentInfo"/>-->
+<!--      </v-col>-->
+<!--      <v-col class="v-col-md-6 v-col-12">-->
+<!--        <program-agent-server-health-info-card :program-agent="agentInfo"/>-->
+<!--      </v-col>-->
+<!--      <v-col class="v-col-md-6 v-col-12" v-if="previewCharts !== undefined" v-for="preview in previewCharts" :key="preview">-->
+<!--        <program-agent-chart-timestamp-view-card :program-agent="agentInfo" :preview="preview"/>-->
+<!--      </v-col>-->
+<!--    </v-row>-->
   </v-container>
 </template>
 
@@ -39,7 +61,9 @@ export default {
   name: "ProgramAgentView",
   data() {
     return {
-      previewCharts: undefined
+      previewCharts: undefined,
+      // cardStyle: 'v-col-lg-4 v-col-md-6 v-col-12'
+      cardStyle: 'v-col-md-6 v-col-12'
     }
   },
   components: {

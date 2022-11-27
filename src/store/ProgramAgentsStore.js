@@ -15,7 +15,6 @@ export const programAgents = {
                 return undefined
             for (const agentsListKey in state.programAgents) {
                 const agent = state.programAgents[agentsListKey];
-                console.log(agent)
                 if (agent.id == agentId) {
                     return agent
                 }

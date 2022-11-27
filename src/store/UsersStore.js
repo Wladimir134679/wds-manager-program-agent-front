@@ -11,7 +11,6 @@ export const userStore = {
             for (const userKey in state.users) {
                 const user = state.users[userKey];
                 if (user.id == id) {
-                    console.log(user)
                     return user
                 }
             }

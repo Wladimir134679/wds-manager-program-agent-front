@@ -15,10 +15,10 @@
         <v-dialog activator="parent">
           <v-card>
             <v-card-title>
-              Title
+              {{ preview.nameDisplay }}
             </v-card-title>
             <v-card-text>
-              <apexchart ref="chartTimeFull" class="pa-5" width="100%" height="500" :series="seriesDataFull"
+              <apexchart ref="chartTimeFull" class="pa-5" width="100%" height="600" :series="seriesDataFull"
                          :options="options"/>
             </v-card-text>
           </v-card>
