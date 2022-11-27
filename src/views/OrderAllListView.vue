@@ -6,6 +6,14 @@
           <v-card-title>
             Заказы
           </v-card-title>
+          <v-card-actions v-if="isAdmin">
+            <v-btn variant="outlined" size="small">
+              Создать
+              <v-dialog activator="parent">
+                <order-create-card/>
+              </v-dialog>
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
       <v-col class="v-col-md-6 v-col-12"
@@ -22,27 +30,20 @@ import userProfileData from "@/mixins/userProfileData";
 import orderApi from "@/api/orderApi";
 import {mapActions, mapGetters} from "vuex";
 import OrderInfoCard from "@/components/OrderInfoCard";
+import OrderCreateCard from "@/components/OrderCreateCard";
+import usersMethod from "@/mixins/usersMethod";
+import programAgentsMethod from "@/mixins/programAgentsMethod";
 
 
 export default {
   name: "OrderAllListView",
-  components: {OrderInfoCard},
-  mixins: [isAuthViewRedirect, userProfileData],
+  components: {OrderCreateCard, OrderInfoCard},
+  mixins: [isAuthViewRedirect, userProfileData, usersMethod, programAgentsMethod],
   data() {
     return {
       loading: true,
-      loadingProgramAgents: true,
-      loadingUsers: true,
       orders: []
     }
-  },
-  computed: {
-    ...mapGetters({
-      getProgramAgent: "programAgents/getAgentInfo",
-      getUser: "users/getUserById",
-      getAllUser: "users/getUsersList",
-      getAllProgramAgent: "programAgents/getAll"
-    })
   },
   mounted() {
     this.loading = true
@@ -54,35 +55,8 @@ export default {
           this.loading = false
         })
 
-    if (this.getAllProgramAgent === undefined || !this.getAllProgramAgent) {
-      this.loadingProgramAgents = true
-      this.loadProgramAgents({
-        ok: () => {
-          this.loadingProgramAgents = false
-        }, error: () => {
-        }
-      })
-    } else {
-      this.loadingProgramAgents = false
-    }
-
-    if (this.getAllUser === undefined || !this.getAllUser) {
-      this.loadingUsers = true
-      this.loadUsers({
-        ok: () => {
-          this.loadingUsers = false
-        }, error: () => {
-        }
-      })
-    } else {
-      this.loadingUsers = false
-    }
   },
-  methods: {
-    ...mapActions({
-      loadProgramAgents: "programAgents/loadAll",
-      loadUsers: "users/load"
-    })
+  methods:{
   }
 }
 </script>
