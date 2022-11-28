@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <v-row v-if="!!userData">
-      <v-col cols="12">
+    <v-row class="d-md-flex justify-center" v-if="!!userData">
+      <v-col class="v-col-12">
         <user-profile-card :user-data="userData"/>
       </v-col>
 
 
-      <v-col cols="12">
+      <v-col class="v-col-12">
         <user-contact-edit-card :user-data="userData"/>
       </v-col>
     </v-row>

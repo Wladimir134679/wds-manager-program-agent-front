@@ -1,56 +1,60 @@
 <template>
   <v-container>
-    <v-card>
-      <v-card-title>
-        Авторизация
-      </v-card-title>
-      <v-card-actions>
-        <v-row>
-          <v-col>
-            <v-form
-                v-model="valid"
-                @submit.prevent="onSubmit">
+    <v-row class="d-md-flex justify-center">
+      <v-col class="v-col-md-8">
+        <v-card class="">
+          <v-card-title>
+            Авторизация
+          </v-card-title>
+          <v-card-actions>
+            <v-row>
+              <v-col>
+                <v-form
+                    v-model="valid"
+                    @submit.prevent="onSubmit">
 
-              <v-text-field
-                  v-model="email"
-                  :readonly="loading"
-                  :rules="[rules.requiredField, rules.email]"
-                  placeholder="exemple.you@email.ru"
-                  label="Электронная почта">
+                  <v-text-field
+                      v-model="email"
+                      :readonly="loading"
+                      :rules="[rules.requiredField, rules.email]"
+                      placeholder="exemple.you@email.ru"
+                      label="Электронная почта">
 
-              </v-text-field>
+                  </v-text-field>
 
-              <v-text-field
-                  v-model="password"
-                  :readonly="loading"
-                  :rules="[rules.requiredField, rules.passwordLen]"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="showPassword ? 'text' : 'password'"
-                  @click:append="showPassword = !showPassword"
-                  label="Пароль"
-                  placeholder="Введите свой пароль">
+                  <v-text-field
+                      v-model="password"
+                      :readonly="loading"
+                      :rules="[rules.requiredField, rules.passwordLen]"
+                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="showPassword ? 'text' : 'password'"
+                      @click:append="showPassword = !showPassword"
+                      label="Пароль"
+                      placeholder="Введите свой пароль">
 
-              </v-text-field>
-              <v-row v-if="!!errorText">
-                <v-col>
-                  {{ errorText }}
-                </v-col>
-              </v-row>
-              <v-btn
-                  :disabled="!valid"
-                  :loading="loading"
-                  type="submit"
-                  color="success"
-                  variant="tonal"
-                  size="large"
-                  block>
-                Войти
-              </v-btn>
-            </v-form>
-          </v-col>
-        </v-row>
-      </v-card-actions>
-    </v-card>
+                  </v-text-field>
+                  <v-row v-if="!!errorText">
+                    <v-col>
+                      {{ errorText }}
+                    </v-col>
+                  </v-row>
+                  <v-btn
+                      :disabled="!valid"
+                      :loading="loading"
+                      type="submit"
+                      color="success"
+                      variant="tonal"
+                      size="large"
+                      block>
+                    Войти
+                  </v-btn>
+                </v-form>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

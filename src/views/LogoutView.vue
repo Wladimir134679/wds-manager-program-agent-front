@@ -1,24 +1,28 @@
 <template>
 <v-container>
-  <v-card>
-    <v-card-title class="text-center">
-      Вы точно хотите выйти?
-    </v-card-title>
-    <v-card-actions>
-      <v-row>
-        <v-col class="v-col-12 v-col-md-6">
-          <v-btn block color="green" @click="logoutProfile()" to="/" variant="outlined">
-            Да
-          </v-btn>
-        </v-col>
-        <v-col class="v-col-12 v-col-md-6">
-          <v-btn block color="red" to="/" variant="outlined">
-            Нет
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-card-actions>
-  </v-card>
+  <v-row class="d-md-flex justify-center">
+    <v-col class="v-col-md-6">
+      <v-card>
+        <v-card-title class="text-center">
+          Вы точно хотите выйти?
+        </v-card-title>
+        <v-card-actions>
+          <v-row>
+            <v-col class="v-col-12 v-col-md-6">
+              <v-btn block color="green" @click="logoutProfile()" to="/" variant="outlined">
+                Да
+              </v-btn>
+            </v-col>
+            <v-col class="v-col-12 v-col-md-6">
+              <v-btn block color="red" to="/" variant="outlined">
+                Нет
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
 </v-container>
 </template>
 
@@ -32,6 +36,7 @@ export default {
     }),
     logoutProfile() {
       this.logout()
+
     }
   }
 }

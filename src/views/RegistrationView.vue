@@ -1,73 +1,77 @@
 <template>
   <v-container>
-    <v-card>
-      <v-card-title>
-        Регистрация
-      </v-card-title>
-      <v-card-actions>
-        <v-row>
-          <v-col>
-            <v-form
-                v-model="valid"
-                @submit.prevent="onSubmit">
+    <v-row class="d-md-flex justify-center">
+      <v-col class="v-col-md-8">
+        <v-card>
+          <v-card-title>
+            Регистрация
+          </v-card-title>
+          <v-card-actions>
+            <v-row>
+              <v-col>
+                <v-form
+                    v-model="valid"
+                    @submit.prevent="onSubmit">
 
-              <v-text-field
-                  v-model="username"
-                  :readonly="loading"
-                  label="Ваше имя">
+                  <v-text-field
+                      v-model="username"
+                      :readonly="loading"
+                      label="Ваше имя">
 
-              </v-text-field>
+                  </v-text-field>
 
-              <v-text-field
-                  v-model="email"
-                  :readonly="loading"
-                  :rules="[rules.requiredField, rules.email]"
-                  placeholder="exemple.you@email.ru"
-                  label="Электронная почта">
+                  <v-text-field
+                      v-model="email"
+                      :readonly="loading"
+                      :rules="[rules.requiredField, rules.email]"
+                      placeholder="exemple.you@email.ru"
+                      label="Электронная почта">
 
-              </v-text-field>
+                  </v-text-field>
 
-              <v-text-field
-                  v-model="password[0]"
-                  :readonly="loading"
-                  :rules="[rules.requiredField, rules.passwordLen]"
-                  :append-icon="showPassword[0] ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="showPassword[0] ? 'text' : 'password'"
-                  @click:append="showPassword[0] = !showPassword[0]"
-                  label="Пароль"
-                  placeholder="Введите свой пароль">
-              </v-text-field>
+                  <v-text-field
+                      v-model="password[0]"
+                      :readonly="loading"
+                      :rules="[rules.requiredField, rules.passwordLen]"
+                      :append-icon="showPassword[0] ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="showPassword[0] ? 'text' : 'password'"
+                      @click:append="showPassword[0] = !showPassword[0]"
+                      label="Пароль"
+                      placeholder="Введите свой пароль">
+                  </v-text-field>
 
-              <v-text-field
-                  v-model="password[1]"
-                  :readonly="loading"
-                  :rules="[rules.requiredField, rules.passwordLen, rules.requiredEq]"
-                  :append-icon="showPassword[1] ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="showPassword[1] ? 'text' : 'password'"
-                  @click:append="showPassword[1] = !showPassword[1]"
-                  label="Повторите пароль"
-                  placeholder="Повторите пароль">
-              </v-text-field>
+                  <v-text-field
+                      v-model="password[1]"
+                      :readonly="loading"
+                      :rules="[rules.requiredField, rules.passwordLen, rules.requiredEq]"
+                      :append-icon="showPassword[1] ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="showPassword[1] ? 'text' : 'password'"
+                      @click:append="showPassword[1] = !showPassword[1]"
+                      label="Повторите пароль"
+                      placeholder="Повторите пароль">
+                  </v-text-field>
 
-              <v-row v-if="!!errorText">
-                <v-col>
-                  {{ errorText }}
-                </v-col>
-              </v-row>
-              <v-btn
-                  :loading="loading"
-                  type="submit"
-                  color="success"
-                  variant="outlined"
-                  size="large"
-                  block>
-                Войти
-              </v-btn>
-            </v-form>
-          </v-col>
-        </v-row>
-      </v-card-actions>
-    </v-card>
+                  <v-row v-if="!!errorText">
+                    <v-col>
+                      {{ errorText }}
+                    </v-col>
+                  </v-row>
+                  <v-btn
+                      :loading="loading"
+                      type="submit"
+                      color="success"
+                      variant="outlined"
+                      size="large"
+                      block>
+                    Войти
+                  </v-btn>
+                </v-form>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

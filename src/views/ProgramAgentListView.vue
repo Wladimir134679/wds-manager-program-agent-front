@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="d-md-flex justify-center">
       <v-col class="v-col-12 v-col-md-6"  v-if="isAuth && isAdmin">
         <v-card>
           <v-card-title>
