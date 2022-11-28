@@ -53,17 +53,46 @@
         </v-col>
       </v-row>
     </v-card-text>
+    <v-card-actions v-if="isAdmin">
+      <v-row>
+        <v-col>
+          <v-btn
+              variant="outlined"
+              block
+              @click="editThis">
+            Редактировать
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+              variant="outlined"
+              block
+              @click="deleteThis">
+            Удалить
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card-actions>
+    <v-dialog v-model="openEdit">
+      <order-edit-card
+      :order="order"
+      :close-dialog-func="closeEdit"/>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import userProfileData from "@/mixins/userProfileData";
+import orderApi from "@/api/orderApi";
+import OrderEditCard from "@/components/OrderEditFormCard";
 
 export default {
   name: "OrderInfoCard",
+  components: {OrderEditCard},
   data() {
     return {
+      openEdit: false,
     }
   },
   mixins: [userProfileData],
@@ -71,6 +100,7 @@ export default {
     order: {
       type: Object
     },
+    updateList: {type: Function},
     loadingProgramAgents: {type: Boolean, default: true},
     loadingUsers: {type: Boolean, default: true},
   },
@@ -94,6 +124,20 @@ export default {
       }
       return 'none'
     },
+    closeEdit(){
+      this.openEdit = false
+      this.updateList()
+    },
+    editThis(){
+      this.openEdit = true
+    },
+    deleteThis() {
+      orderApi.deleteOrder(this.order.id, (ok) => {
+        this.updateList()
+      }, error =>{
+        this.updateList()
+      })
+    }
   }
 }
 </script>

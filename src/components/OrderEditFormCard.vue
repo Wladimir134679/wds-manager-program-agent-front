@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="loadingUsers">
     <v-card-title>
-      Создать заказ
+      Редактировать заказ №{{ order.id }}
     </v-card-title>
     <v-card-text>
       <v-form v-model="validForm">
@@ -68,11 +68,11 @@
       </v-form>
     </v-card-text>
     <v-card-text v-if="!!errorText">
-      {{errorText}}
+      {{ errorText }}
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn :disabled="!validForm" variant="outlined" class="w-75" @click="clickSave">
-        Создать
+        Сохранить
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -84,7 +84,7 @@ import programAgentsMethod from "@/mixins/programAgentsMethod";
 import orderApi from "@/api/orderApi";
 
 export default {
-  name: "OrderCreateCard",
+  name: "OrderEditCard",
   mixins: [usersMethod, programAgentsMethod],
   data() {
     return {
@@ -118,20 +118,32 @@ export default {
       ]
     }
   },
-  props:{
+  props: {
     closeDialogFunc: {
       type: Function
+    },
+    order: {
+      type: Object
     }
   },
   computed: {},
+  mounted() {
+    this.userSelect = this.getUser(this.order.customerId)
+    this.programAgentSelect = this.getProgramAgent(this.order.programAgentId)
+    this.amount = this.order.amount
+    this.intervalTypes.forEach(value => {
+      if (value.type === this.order.intervalType)
+        this.intervalSelect = value
+    })
+  },
   methods: {
     clickSave() {
-      orderApi.createOrder({
-        amount: this.amount,
-        customerId: this.userSelect.id,
-        programAgentId: this.programAgentSelect.id,
-        intervalType: this.intervalSelect.type
-      }, (data) => {
+      this.order.amount = this.amount
+      this.order.customerId = this.userSelect.id
+      this.order.programAgentId = this.programAgentSelect.id
+      this.order.intervalType = this.intervalSelect.type
+
+      orderApi.editOrder(this.order, (data) => {
         console.log(data)
         this.closeDialogFunc();
       }, error => {
