@@ -51,18 +51,14 @@
         </v-row>
         <v-row>
           <v-col :class="styleLabel">
-            Интервал платежа
+            Первый платёж
           </v-col>
           <v-col>
-            <v-select label="Когда"
-                      :items="intervalTypes"
-                      item-title="name"
-                      persistent-hint
-                      :rules="[rules.requiredField]"
-                      variant="underlined"
-                      return-object
-                      single-line
-                      v-model="intervalSelect"/>
+            <v-text-field
+            type="date"
+            v-model="firstWriteOffDate"
+            :rules="[rules.requiredField]"
+            label="Когда"/>
           </v-col>
         </v-row>
       </v-form>
@@ -81,16 +77,16 @@
 <script>
 import usersMethod from "@/mixins/usersMethod";
 import programAgentsMethod from "@/mixins/programAgentsMethod";
-import orderApi from "@/api/orderApi";
+import receiptApi from "@/api/receiptApi";
 
 export default {
-  name: "OrderCreateCard",
+  name: "ReceiptCreateCard",
   mixins: [usersMethod, programAgentsMethod],
   data() {
     return {
       styleLabel: 'v-col-md-3 v-col-12',
       userSelect: undefined,
-      intervalSelect: undefined,
+      firstWriteOffDate: undefined,
       programAgentSelect: undefined,
       amount: 0,
       validForm: false,
@@ -98,24 +94,6 @@ export default {
         requiredField: v => (!!v) || "Пустое поле",
       },
       errorText: undefined,
-      intervalTypes: [
-        {
-          type: "DAY",
-          name: "День"
-        },
-        {
-          type: "WEEK",
-          name: "Неделя"
-        },
-        {
-          type: "MONTH",
-          name: "Месяц"
-        },
-        {
-          type: "SIX_MONTHS",
-          name: "Полгода"
-        },
-      ]
     }
   },
   props:{
@@ -126,11 +104,12 @@ export default {
   computed: {},
   methods: {
     clickSave() {
-      orderApi.createOrder({
+      console.log(this.firstWriteOffDate)
+      receiptApi.createReceipt({
         amount: this.amount,
         customerId: this.userSelect.id,
         programAgentId: this.programAgentSelect.id,
-        intervalType: this.intervalSelect.type
+        nextWriteOffTimestamp: this.firstWriteOffDate
       }, (data) => {
         console.log(data)
         this.closeDialogFunc();

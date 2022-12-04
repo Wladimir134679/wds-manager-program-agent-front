@@ -81,10 +81,10 @@
 <script>
 import usersMethod from "@/mixins/usersMethod";
 import programAgentsMethod from "@/mixins/programAgentsMethod";
-import orderApi from "@/api/orderApi";
+import receiptApi from "@/api/receiptApi";
 
 export default {
-  name: "OrderEditCard",
+  name: "ReceiptEditCard",
   mixins: [usersMethod, programAgentsMethod],
   data() {
     return {
@@ -143,7 +143,7 @@ export default {
       this.order.programAgentId = this.programAgentSelect.id
       this.order.intervalType = this.intervalSelect.type
 
-      orderApi.editOrder(this.order, (data) => {
+      receiptApi.editReceipt(this.order, (data) => {
         console.log(data)
         this.closeDialogFunc();
       }, error => {

@@ -2,14 +2,14 @@ import api from "@/api/api";
 import axios from "axios";
 import config from "@/api/config";
 
-const orderAll = config.api + '/order/all';
-const editOrder = config.api + '/order/edit';
-const createOrder = config.api + '/order/create';
-const deleteOrder = config.api + '/order/delete';
+const receiptAll = config.api + '/receipt/all';
+const editReceipt = config.api + '/receipt/edit';
+const createReceipt = config.api + '/receipt/create';
+const deleteReceipt = config.api + '/receipt/delete';
 
 export default {
-    getAllListOrder: function (ok, error) {
-        axios.get(orderAll,
+    getAllListReceipt: function (ok, error) {
+        axios.get(receiptAll,
             {
                 headers: api.getHeadersLogin(),
             })
@@ -20,8 +20,8 @@ export default {
                 error(reason)
             })
     },
-    createOrder: function (data, ok, error) {
-        axios.post(createOrder, data,
+    createReceipt: function (data, ok, error) {
+        axios.post(createReceipt, data,
             {
                 headers: api.getHeadersLogin(),
             })
@@ -32,8 +32,8 @@ export default {
                 error(reason)
             })
     },
-    deleteOrder: function (id, ok, error) {
-        axios.get(deleteOrder, {
+    deleteReceipt: function (id, ok, error) {
+        axios.get(deleteReceipt, {
             params: {
                 id: id
             },
@@ -46,8 +46,8 @@ export default {
                 error(reason)
             })
     },
-    editOrder: function (data, ok, error) {
-        axios.post(editOrder, data,
+    editReceipt: function (data, ok, error) {
+        axios.post(editReceipt, data,
             {
                 headers: api.getHeadersLogin(),
             })

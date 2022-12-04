@@ -58,10 +58,10 @@
         <v-list-item
             v-if="isAuth"
             link
-            to="/orders">
+            to="/receipt">
           <v-list-item-title>
             <v-icon>mdi-image</v-icon>
-            Заказы
+            Квитанции
           </v-list-item-title>
         </v-list-item>
 

@@ -4,13 +4,13 @@
       <v-col cols="12">
         <v-card :loading="loading">
           <v-card-title>
-            Заказы
+            Квитанции
           </v-card-title>
           <v-card-actions v-if="isAdmin">
             <v-btn variant="outlined" size="small" @click="openCreateDialog = !openCreateDialog">
               Создать
               <v-dialog v-model="openCreateDialog">
-                <order-create-card :close-dialog-func="closeDialog"/>
+                <receipt-create-card :close-dialog-func="closeDialog"/>
               </v-dialog>
             </v-btn>
           </v-card-actions>
@@ -18,7 +18,7 @@
       </v-col>
       <v-col class="v-col-md-6 v-col-12"
              v-for="order in orders" :key="order.id">
-        <order-info-card
+        <receipt-info-card
             :order="order"
             :update-list="updateData"
             :loading-users="loadingUsers"
@@ -31,17 +31,17 @@
 <script>
 import isAuthViewRedirect from "@/mixins/isAuthViewRedirect";
 import userProfileData from "@/mixins/userProfileData";
-import orderApi from "@/api/orderApi";
+import receiptApi from "@/api/receiptApi";
 import {mapActions, mapGetters} from "vuex";
-import OrderInfoCard from "@/components/OrderInfoCard";
-import OrderCreateCard from "@/components/OrderCreateCard";
+import ReceiptInfoCard from "@/components/ReceiptInfoCard";
+import ReceiptCreateCard from "@/components/ReceiptCreateCard";
 import usersMethod from "@/mixins/usersMethod";
 import programAgentsMethod from "@/mixins/programAgentsMethod";
 
 
 export default {
-  name: "OrderAllListView",
-  components: {OrderCreateCard, OrderInfoCard},
+  name: "ReceiptAllListView",
+  components: {ReceiptCreateCard, ReceiptInfoCard},
   mixins: [isAuthViewRedirect, userProfileData, usersMethod, programAgentsMethod],
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
   methods: {
     updateData() {
       this.loading = true
-      orderApi.getAllListOrder(
+      receiptApi.getAllListReceipt(
           (ok) => {
             this.loading = false
             this.orders = ok.data

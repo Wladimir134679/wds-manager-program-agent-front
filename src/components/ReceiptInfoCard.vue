@@ -12,7 +12,7 @@
           <b>{{ getProgramAgent(order.programAgentId).name }}</b>
         </v-col>
         <v-col>
-          <v-btn size="small" href="/" block>
+          <v-btn size="small"  :to="'/program-agent/' + getProgramAgent(order.programAgentId).id"  block>
             Перейти
           </v-btn>
         </v-col>
@@ -22,7 +22,12 @@
           Пользователь
         </v-col>
         <v-col>
-          {{ getUser(order.customerId).username }}
+          <b>{{ getUser(order.customerId).username }}</b>
+        </v-col>
+        <v-col>
+          <v-btn size="small" href="/" block>
+            Перейти
+          </v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -30,7 +35,7 @@
           Сумма
         </v-col>
         <v-col>
-          {{ order.amount }} монет в <b>{{ nameInterval(order) }}</b>
+          <b>{{ order.amount }}</b> монет за 30 дней
         </v-col>
       </v-row>
       <v-row>
@@ -43,10 +48,10 @@
       </v-row>
       <v-row>
         <v-col cols="4">
-          Последние списание
+          Следующие списание
         </v-col>
-        <v-col v-if="!!order.lastProcessingTimestamp">
-          {{ new Date(order.lastProcessingTimestamp).toLocaleString() }}
+        <v-col v-if="!!order.nextWriteOffTimestamp">
+          {{ new Date(order.nextWriteOffTimestamp).toLocaleString() }}
         </v-col>
         <v-col v-else>
           Нет данных
@@ -74,7 +79,7 @@
       </v-row>
     </v-card-actions>
     <v-dialog v-model="openEdit">
-      <order-edit-card
+      <receipt-edit-card
       :order="order"
       :close-dialog-func="closeEdit"/>
     </v-dialog>
@@ -84,12 +89,12 @@
 <script>
 import {mapGetters} from "vuex";
 import userProfileData from "@/mixins/userProfileData";
-import orderApi from "@/api/orderApi";
-import OrderEditCard from "@/components/OrderEditFormCard";
+import orderApi from "@/api/receiptApi";
+import ReceiptEditCard from "@/components/ReceiptEditFormCard";
 
 export default {
-  name: "OrderInfoCard",
-  components: {OrderEditCard},
+  name: "ReceiptInfoCard",
+  components: {ReceiptEditCard},
   data() {
     return {
       openEdit: false,
@@ -111,19 +116,6 @@ export default {
     })
   },
   methods: {
-    nameInterval: (order) => {
-      switch (order.intervalType) {
-        case 'DAY':
-          return "день"
-        case 'WEEK':
-          return "неделю"
-        case 'MONTH':
-          return "месяц"
-        case 'SIX_MONTHS':
-          return "полгода"
-      }
-      return 'none'
-    },
     closeEdit(){
       this.openEdit = false
       this.updateList()

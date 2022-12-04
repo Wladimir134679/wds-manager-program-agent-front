@@ -13,13 +13,47 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12">
+      <v-col class="v-col-6">
         <v-card>
           <v-card-title>
-            Test charts
+            Наши контакты
           </v-card-title>
           <v-card-text>
-            <apexchart class="pa-5" width="100%" height="300" :series="series" :options="options"/>
+            <v-row>
+              <v-col cols="5">
+                <b>Телеграм</b>
+              </v-col>
+              <v-col>
+                @usernameTG
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="5">
+                <b>Электронная почта</b>
+              </v-col>
+              <v-col>
+                username@mail.ru
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="5">
+                <b>Номер телефона</b>
+              </v-col>
+              <v-col>
+                +7 900 123 76 57
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <v-card-title>
+            Информация
+          </v-card-title>
+          <v-card-text>
+            Текущая информационная система была разработа для курсовой работы по
+            предмету "Проектирование вычислительных систем" по направлению "Информатика и вычислетельная техника"
           </v-card-text>
         </v-card>
       </v-col>
