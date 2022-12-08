@@ -127,13 +127,14 @@ const api = {
             error(reason)
         })
     },
-    getChartData: function (id, name, from, to, ok, error) {
+    getChartData: function (id, name, from, to, group, ok, error) {
         axios.get(apiProgramAgentChartData, {
             params: {
                 id: id,
                 name: name,
                 from: from,
                 to: to,
+                group: group,
             },
             headers: this.getHeadersLogin(),
         }).then(value => {

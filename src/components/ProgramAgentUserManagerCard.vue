@@ -3,72 +3,77 @@
     <v-card-title>
       Управляющие люди
     </v-card-title>
-    <div :hidden="hidden">
-      <v-card-text>
-        <v-row>
-          <v-col>
-            <v-list>
-              <v-select clearable
-                        label="Заказчик"
-                        :items="usersList"
-                        item-title="username"
-                        persistent-hint
-                        return-object
-                        single-line
-                        v-model="customerSelect">
+    <v-card-actions>
+      <v-btn
+          block
+          variant="outlined"
+          @click="openEdit = !openEdit">
+        Редактировать
 
-              </v-select>
-            </v-list>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-list>
-              <v-select clearable
-                        label="Разработчик"
-                        :items="usersList"
-                        item-title="username"
-                        persistent-hint
-                        return-object
-                        single-line
-                        v-model="developerSelect">
+        <v-dialog v-model="openEdit">
+          <v-card>
+            <v-card-title>
+              Редактирование управляющих людей
+            </v-card-title>
 
-              </v-select>
-            </v-list>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <v-card-actions>
-        <v-row>
-          <v-col cols="12">
-            <v-btn
-                block
-                variant="outlined"
-                @click="saveUser">
-              Сохранить
-            </v-btn>
-          </v-col>
-          <v-col cols="12">
-            <v-btn
-                block
-                variant="outlined"
-                @click="hidden = !hidden">
-              Закрыть
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card-actions>
-    </div>
-    <div :hidden="!hidden">
-      <v-card-actions>
-        <v-btn
-            block
-            variant="outlined"
-            @click="hidden = !hidden">
-          Редактировать
-        </v-btn>
-      </v-card-actions>
-    </div>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <v-list>
+                    <v-select clearable
+                              label="Заказчик"
+                              :items="usersList"
+                              item-title="username"
+                              persistent-hint
+                              return-object
+                              single-line
+                              v-model="customerSelect">
+
+                    </v-select>
+                  </v-list>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-list>
+                    <v-select clearable
+                              label="Разработчик"
+                              :items="usersList"
+                              item-title="username"
+                              persistent-hint
+                              return-object
+                              single-line
+                              v-model="developerSelect">
+
+                    </v-select>
+                  </v-list>
+                </v-col>
+              </v-row>
+            </v-card-text>
+            <v-card-actions>
+              <v-row>
+                <v-col class="v-col-md-6 v-col-12">
+                  <v-btn
+                      block
+                      variant="outlined"
+                      @click="saveUser">
+                    Сохранить
+                  </v-btn>
+                </v-col>
+                <v-col class="v-col-md-6 v-col-12">
+                  <v-btn
+                      block
+                      variant="outlined"
+                      @click="openEdit = !openEdit">
+                    Закрыть
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -84,7 +89,7 @@ export default {
     return {
       customerSelect: undefined,
       developerSelect: undefined,
-      defaultHidden: true
+      defaultOpenEdit: false
     }
   },
   props: {
@@ -97,24 +102,12 @@ export default {
       usersList: "users/getUsersList",
       userById: "users/getUserById"
     }),
-    hidden: {
-      get: function (){
-        return this.defaultHidden
+    openEdit: {
+      get: function () {
+        return this.defaultOpenEdit
       },
       set: function (val) {
-        this.defaultHidden = val
-        if (!val) {
-          if (this.usersList === undefined)
-            this.loadUsers({
-              ok: () => {
-                this.loadUserModel()
-              },
-              error: () => {
-              }
-            })
-          else
-            this.loadUserModel()
-        }
+        this.defaultOpenEdit = val;
       }
     }
   },
@@ -125,6 +118,7 @@ export default {
     saveUser() {
       let customerIdNew = undefined
       let developerIdNew = undefined
+      this.openEdit = false;
       if (this.customerSelect)
         customerIdNew = this.customerSelect.id
       if (this.developerSelect)
@@ -141,6 +135,16 @@ export default {
     }
   },
   mounted() {
+    if (this.usersList === undefined)
+      this.loadUsers({
+        ok: () => {
+          this.loadUserModel()
+        },
+        error: () => {
+        }
+      })
+    else
+      this.loadUserModel()
   },
 }
 </script>

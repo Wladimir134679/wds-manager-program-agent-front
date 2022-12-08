@@ -76,7 +76,7 @@ export default {
   },
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
-    if(this.agentInfo.online) {
+    if(!!this.agentInfo && this.agentInfo.online) {
       this.loadHealth({
         id: this.getAgentId,
         ok: function () {
