@@ -6,7 +6,7 @@
     <v-card-text>
       {{ preview.description }}
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions v-if="preview.isAbilityGroupTimestamp">
       <v-row>
         <v-col v-for="type in groupTimes" :key="type.type">
           <v-btn variant="outlined" block @click="updateGroup(type)" :disabled="selectTypes === type.type">
