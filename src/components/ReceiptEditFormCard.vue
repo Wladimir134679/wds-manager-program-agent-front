@@ -128,7 +128,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.userSelect = this.getUser(this.order.customerId)
+    this.userSelect = this.getUserById(this.order.customerId)
     this.programAgentSelect = this.getProgramAgent(this.order.programAgentId)
     this.amount = this.order.amount
     this.intervalTypes.forEach(value => {

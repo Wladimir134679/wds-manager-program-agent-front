@@ -6,9 +6,6 @@
       </v-col>
 
 
-      <v-col class="v-col-12">
-        <user-contact-edit-card :user-data="userData"/>
-      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -16,11 +13,10 @@
 <script>
 import {mapState} from "vuex"
 import UserProfileCard from "@/components/UserProfileCard";
-import UserContactEditCard from "@/components/UserContactEditCard";
 
 export default {
   name: "ProfileView",
-  components: {UserContactEditCard, UserProfileCard},
+  components: {UserProfileCard},
   computed: {
     ...mapState({
       userData: (state) => state.profile.userData

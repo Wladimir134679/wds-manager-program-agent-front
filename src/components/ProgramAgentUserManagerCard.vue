@@ -81,10 +81,11 @@
 import {mapGetters, mapActions} from "vuex";
 import userProfileData from "@/mixins/userProfileData";
 import api from "@/api/api";
+import usersMethod from "@/mixins/usersMethod";
 
 export default {
   name: "ProgramAgentUserManagerCard",
-  mixins: [userProfileData],
+  mixins: [userProfileData, usersMethod],
   data() {
     return {
       customerSelect: undefined,
@@ -98,23 +99,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      usersList: "users/getUsersList",
-      userById: "users/getUserById"
-    }),
-    openEdit: {
-      get: function () {
-        return this.defaultOpenEdit
-      },
-      set: function (val) {
-        this.defaultOpenEdit = val;
-      }
-    }
+    // ...mapGetters({
+    //   usersList: "users/getUsersList",
+    //   userById: "users/getUserById"
+    // }),
+    // openEdit: {
+    //   get: function () {
+    //     return this.defaultOpenEdit
+    //   },
+    //   set: function (val) {
+    //     this.defaultOpenEdit = val;
+    //   }
+    // }
   },
   methods: {
-    ...mapActions({
-      loadUsers: "users/load"
-    }),
+    // ...mapActions({
+    //   loadUsers: "users/load"
+    // }),
     saveUser() {
       let customerIdNew = undefined
       let developerIdNew = undefined
@@ -129,22 +130,22 @@ export default {
     },
     loadUserModel() {
       if (this.programAgent.customerId != null)
-        this.customerSelect = this.userById(this.programAgent.customerId)
+        this.customerSelect = this.getUserById(this.programAgent.customerId)
       if (this.programAgent.developerId != null)
-        this.developerSelect = this.userById(this.programAgent.developerId)
+        this.developerSelect = this.getUserById(this.programAgent.developerId)
     }
   },
   mounted() {
-    if (this.usersList === undefined)
-      this.loadUsers({
-        ok: () => {
-          this.loadUserModel()
-        },
-        error: () => {
-        }
-      })
-    else
-      this.loadUserModel()
+    // if (this.usersList === undefined)
+    //   this.loadUsers({
+    //     ok: () => {
+    //       this.loadUserModel()
+    //     },
+    //     error: () => {
+    //     }
+    //   })
+    // else
+    //   this.loadUserModel()
   },
 }
 </script>

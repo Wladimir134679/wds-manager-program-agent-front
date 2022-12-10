@@ -11,7 +11,7 @@ export const programAgents = {
             return state.programAgents
         },
         getAgentInfo: (state) => (agentId) => {
-            if (state.programAgents === undefined)
+            if (state.programAgents === undefined || agentId === undefined)
                 return undefined
             for (const agentsListKey in state.programAgents) {
                 const agent = state.programAgents[agentsListKey];

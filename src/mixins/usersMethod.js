@@ -8,11 +8,20 @@ export default {
     },
     computed: {
         ...mapGetters({
-            getUser: "users/getUserById",
+            getUserById: "users/getUserById",
             getAllUser: "users/getUsersList",
-        })
+        }),
+        ...mapState({
+            isAuth: state => state.profile.isAuth,
+            profileUser: state => state.profile.userData
+        }),
+        isAdmin(){
+            return !!this.profileUser && this.profileUser.role === "ADMIN"
+        }
     },
     mounted() {
+        if(!this.isAdmin)
+            return;
         if (this.getAllUser === undefined || !this.getAllUser) {
             this.loadingUsers = true
             this.loadUsers({

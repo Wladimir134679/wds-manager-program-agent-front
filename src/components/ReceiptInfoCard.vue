@@ -1,20 +1,25 @@
 <template>
-  <v-card :loading="loadingProgramAgents || loadingUsers">
+  <v-card :loading="loadingProgramAgents">
     <v-card-title>
       Заказ №{{ order.id }}
     </v-card-title>
     <v-card-text v-if="!(loadingProgramAgents && loadUsers)">
-      <v-row>
+      <v-row v-if="!!getProgramAgent(order.programAgentId)">
         <v-col cols="4">
           Програмный агент
         </v-col>
         <v-col>
-          <b>{{ getProgramAgent(order.programAgentId).name }}</b>
+          <b>{{ thisProgramAgentData(order.programAgentId).name }}</b>
         </v-col>
         <v-col>
-          <v-btn size="small"  :to="'/program-agent/' + getProgramAgent(order.programAgentId).id"  block>
+          <v-btn size="small" :to="'/program-agent/' + thisProgramAgentData(order.programAgentId).id" block>
             Перейти
           </v-btn>
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col>
+          <b>Не доступный програмный агент</b>
         </v-col>
       </v-row>
       <v-row v-if="isAdmin">
@@ -80,8 +85,8 @@
     </v-card-actions>
     <v-dialog v-model="openEdit">
       <receipt-edit-card
-      :order="order"
-      :close-dialog-func="closeEdit"/>
+          :order="order"
+          :close-dialog-func="closeEdit"/>
     </v-dialog>
   </v-card>
 </template>
@@ -101,6 +106,8 @@ export default {
     }
   },
   mixins: [userProfileData],
+  mounted() {
+  },
   props: {
     order: {
       type: Object
@@ -113,22 +120,25 @@ export default {
     ...mapGetters({
       getProgramAgent: "programAgents/getAgentInfo",
       getUser: "users/getUserById",
-    })
+    }),
   },
   methods: {
-    closeEdit(){
+    closeEdit() {
       this.openEdit = false
       this.updateList()
     },
-    editThis(){
+    editThis() {
       this.openEdit = true
     },
     deleteThis() {
       orderApi.deleteOrder(this.order.id, (ok) => {
         this.updateList()
-      }, error =>{
+      }, error => {
         this.updateList()
       })
+    },
+    thisProgramAgentData(id) {
+      return this.getProgramAgent(id)
     }
   }
 }
