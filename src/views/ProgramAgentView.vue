@@ -63,9 +63,7 @@ export default {
   },
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
-    if (!!this.agentInfo && this.agentInfo.online) {
-      this.thisUpdateData()
-    }
+    this.thisUpdateData()
   },
   computed: {
     ...mapState({
@@ -86,14 +84,16 @@ export default {
       loadHealth: "programAgents/loadHealth"
     }),
     thisUpdateData() {
-      this.loadHealth({
-        id: this.getAgentId,
-        ok: function () {
-        },
-        error: function () {
-        }
-      })
-      this.loadChartsPreview()
+      if (!!this.agentInfo && this.agentInfo.online) {
+        this.loadHealth({
+          id: this.getAgentId,
+          ok: function () {
+          },
+          error: function () {
+          }
+        })
+        this.loadChartsPreview()
+      }
       programAgentPaymentsApi.findById(this.getAgentId, (ok) => {
         this.paymentsArray = ok.data
       }, error => {

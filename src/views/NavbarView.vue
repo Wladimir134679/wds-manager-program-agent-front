@@ -36,6 +36,7 @@
           </v-list-item-title>
         </v-list-item>
 
+        <v-divider></v-divider>
         <v-list-item
             link
             to="/program-agents">
@@ -62,14 +63,6 @@
           <v-list-item-title>
             <v-icon>mdi-image</v-icon>
             Платежи
-          </v-list-item-title>
-        </v-list-item>
-
-        <v-list-item
-            link to="/about-the-project">
-          <v-list-item-title>
-            <v-icon>mdi-help-box</v-icon>
-            О проекте
           </v-list-item-title>
         </v-list-item>
 
@@ -100,6 +93,16 @@
           <v-list-item-title>
             <v-icon>mdi-account-plus</v-icon>
             Войти
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item
+            link to="/about-the-project">
+          <v-list-item-title>
+            <v-icon>mdi-help-box</v-icon>
+            О проекте
           </v-list-item-title>
         </v-list-item>
 
