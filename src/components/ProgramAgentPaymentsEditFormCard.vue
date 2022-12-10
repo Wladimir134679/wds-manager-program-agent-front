@@ -49,22 +49,6 @@
                           variant="underlined"/>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col :class="styleLabel">
-            Интервал платежа
-          </v-col>
-          <v-col>
-            <v-select label="Когда"
-                      :items="intervalTypes"
-                      item-title="name"
-                      persistent-hint
-                      :rules="[rules.requiredField]"
-                      variant="underlined"
-                      return-object
-                      single-line
-                      v-model="intervalSelect"/>
-          </v-col>
-        </v-row>
       </v-form>
     </v-card-text>
     <v-card-text v-if="!!errorText">
@@ -90,7 +74,6 @@ export default {
     return {
       styleLabel: 'v-col-md-3 v-col-12',
       userSelect: undefined,
-      intervalSelect: undefined,
       programAgentSelect: undefined,
       amount: 0,
       validForm: false,
@@ -98,24 +81,6 @@ export default {
         requiredField: v => (!!v) || "Пустое поле",
       },
       errorText: undefined,
-      intervalTypes: [
-        {
-          type: "DAY",
-          name: "День"
-        },
-        {
-          type: "WEEK",
-          name: "Неделя"
-        },
-        {
-          type: "MONTH",
-          name: "Месяц"
-        },
-        {
-          type: "SIX_MONTHS",
-          name: "Полгода"
-        },
-      ]
     }
   },
   props: {
@@ -131,17 +96,12 @@ export default {
     this.userSelect = this.getUserById(this.order.customerId)
     this.programAgentSelect = this.getProgramAgent(this.order.programAgentId)
     this.amount = this.order.amount
-    this.intervalTypes.forEach(value => {
-      if (value.type === this.order.intervalType)
-        this.intervalSelect = value
-    })
   },
   methods: {
     clickSave() {
       this.order.amount = this.amount
       this.order.customerId = this.userSelect.id
       this.order.programAgentId = this.programAgentSelect.id
-      this.order.intervalType = this.intervalSelect.type
 
       receiptApi.editProgramAgentPayments(this.order, (data) => {
         console.log(data)

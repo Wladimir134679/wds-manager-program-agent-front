@@ -49,18 +49,6 @@
                           variant="underlined"/>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col :class="styleLabel">
-            Первый платёж
-          </v-col>
-          <v-col>
-            <v-text-field
-            type="date"
-            v-model="firstWriteOffDate"
-            :rules="[rules.requiredField]"
-            label="Когда"/>
-          </v-col>
-        </v-row>
       </v-form>
     </v-card-text>
     <v-card-text v-if="!!errorText">
@@ -86,7 +74,6 @@ export default {
     return {
       styleLabel: 'v-col-md-3 v-col-12',
       userSelect: undefined,
-      firstWriteOffDate: undefined,
       programAgentSelect: undefined,
       amount: 0,
       validForm: false,
@@ -104,12 +91,10 @@ export default {
   computed: {},
   methods: {
     clickSave() {
-      console.log(this.firstWriteOffDate)
       receiptApi.createProgramAgentPayments({
         amount: this.amount,
         customerId: this.userSelect.id,
-        programAgentId: this.programAgentSelect.id,
-        nextWriteOffTimestamp: this.firstWriteOffDate
+        programAgentId: this.programAgentSelect.id
       }, (data) => {
         console.log(data)
         this.closeDialogFunc();
