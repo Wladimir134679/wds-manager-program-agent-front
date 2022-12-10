@@ -7,10 +7,10 @@
       <v-btn
           block
           variant="outlined"
-          @click="openEdit = !openEdit">
+          @click="defaultOpenEdit = !defaultOpenEdit">
         Редактировать
 
-        <v-dialog v-model="openEdit">
+        <v-dialog v-model="defaultOpenEdit">
           <v-card>
             <v-card-title>
               Редактирование управляющих людей
@@ -22,7 +22,7 @@
                   <v-list>
                     <v-select clearable
                               label="Заказчик"
-                              :items="usersList"
+                              :items="getAllUser"
                               item-title="username"
                               persistent-hint
                               return-object
@@ -38,7 +38,7 @@
                   <v-list>
                     <v-select clearable
                               label="Разработчик"
-                              :items="usersList"
+                              :items="getAllUser"
                               item-title="username"
                               persistent-hint
                               return-object
@@ -64,7 +64,7 @@
                   <v-btn
                       block
                       variant="outlined"
-                      @click="openEdit = !openEdit">
+                      @click="defaultOpenEdit = !defaultOpenEdit">
                     Закрыть
                   </v-btn>
                 </v-col>
@@ -90,7 +90,8 @@ export default {
     return {
       customerSelect: undefined,
       developerSelect: undefined,
-      defaultOpenEdit: false
+      defaultOpenEdit: false,
+      loadingProcessing: false,
     }
   },
   props: {
@@ -99,33 +100,21 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters({
-    //   usersList: "users/getUsersList",
-    //   userById: "users/getUserById"
-    // }),
-    // openEdit: {
-    //   get: function () {
-    //     return this.defaultOpenEdit
-    //   },
-    //   set: function (val) {
-    //     this.defaultOpenEdit = val;
-    //   }
-    // }
   },
   methods: {
-    // ...mapActions({
-    //   loadUsers: "users/load"
-    // }),
     saveUser() {
       let customerIdNew = undefined
       let developerIdNew = undefined
-      this.openEdit = false;
+      this.loadingProcessing = true
       if (this.customerSelect)
         customerIdNew = this.customerSelect.id
       if (this.developerSelect)
         developerIdNew = this.developerSelect.id
       api.agentConnectUser(this.programAgent.id, customerIdNew, developerIdNew, (ok) => {
+        this.loadingProcessing = false
+        this.defaultOpenEdit = false
       }, error => {
+        this.loadingProcessing = false
       })
     },
     loadUserModel() {
@@ -136,16 +125,7 @@ export default {
     }
   },
   mounted() {
-    // if (this.usersList === undefined)
-    //   this.loadUsers({
-    //     ok: () => {
-    //       this.loadUserModel()
-    //     },
-    //     error: () => {
-    //     }
-    //   })
-    // else
-    //   this.loadUserModel()
+    this.loadUserModel()
   },
 }
 </script>

@@ -58,10 +58,10 @@
         <v-list-item
             v-if="isAuth"
             link
-            to="/receipt">
+            to="/payments/program-agent">
           <v-list-item-title>
             <v-icon>mdi-image</v-icon>
-            Квитанции
+            Платежи
           </v-list-item-title>
         </v-list-item>
 

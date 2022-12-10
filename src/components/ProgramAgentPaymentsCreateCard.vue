@@ -77,10 +77,10 @@
 <script>
 import usersMethod from "@/mixins/usersMethod";
 import programAgentsMethod from "@/mixins/programAgentsMethod";
-import receiptApi from "@/api/receiptApi";
+import receiptApi from "@/api/programAgentPaymentsApi";
 
 export default {
-  name: "ReceiptCreateCard",
+  name: "ProgramAgentPaymentsCreateCard",
   mixins: [usersMethod, programAgentsMethod],
   data() {
     return {
@@ -105,7 +105,7 @@ export default {
   methods: {
     clickSave() {
       console.log(this.firstWriteOffDate)
-      receiptApi.createReceipt({
+      receiptApi.createProgramAgentPayments({
         amount: this.amount,
         customerId: this.userSelect.id,
         programAgentId: this.programAgentSelect.id,

@@ -40,10 +40,13 @@
           Сумма
         </v-col>
         <v-col>
-          <b>{{ order.amount }}</b> монет за 30 дней
+          <b>{{ order.amount.toFixed(2) }}</b> монет за 30 дней
+        </v-col>
+        <v-col>
+          <b>{{ (order.amount / 30).toFixed(2) }}</b> монет в день
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="isAdmin">
         <v-col cols="4">
           Создан
         </v-col>
@@ -51,12 +54,12 @@
           {{ new Date(order.createTimestamp).toLocaleString() }}
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="isAdmin">
         <v-col cols="4">
-          Следующие списание
+          Последняя обработка
         </v-col>
-        <v-col v-if="!!order.nextWriteOffTimestamp">
-          {{ new Date(order.nextWriteOffTimestamp).toLocaleString() }}
+        <v-col v-if="!!order.lastProcessingTimestamp">
+          {{ new Date(order.lastProcessingTimestamp).toLocaleString() }}
         </v-col>
         <v-col v-else>
           Нет данных
@@ -84,7 +87,7 @@
       </v-row>
     </v-card-actions>
     <v-dialog v-model="openEdit">
-      <receipt-edit-card
+      <program-agent-payments-edit-card
           :order="order"
           :close-dialog-func="closeEdit"/>
     </v-dialog>
@@ -94,12 +97,12 @@
 <script>
 import {mapGetters} from "vuex";
 import userProfileData from "@/mixins/userProfileData";
-import orderApi from "@/api/receiptApi";
-import ReceiptEditCard from "@/components/ReceiptEditFormCard";
+import orderApi from "@/api/programAgentPaymentsApi";
+import ProgramAgentPaymentsEditCard from "@/components/ProgramAgentPaymentsEditFormCard.vue";
 
 export default {
-  name: "ReceiptInfoCard",
-  components: {ReceiptEditCard},
+  name: "ProgramAgentPaymentsInfoCard",
+  components: {ProgramAgentPaymentsEditCard},
   data() {
     return {
       openEdit: false,
@@ -131,7 +134,7 @@ export default {
       this.openEdit = true
     },
     deleteThis() {
-      orderApi.deleteOrder(this.order.id, (ok) => {
+      orderApi.deleteProgramAgentPayments(this.order.id, (ok) => {
         this.updateList()
       }, error => {
         this.updateList()

@@ -10,7 +10,7 @@ import CreateProgramAgentView from "@/views/CreateProgramAgentView";
 import NotFoundView from "@/views/NotFoundView";
 import RegistrationView from "@/views/RegistrationView";
 import UsersListView from "@/views/UsersListView";
-import ReceiptAllListView from "@/views/ReceiptAllListView";
+import ProgramAgentPaymentsAllListView from "@/views/ProgramAgentPaymentsAllListView.vue";
 
 
 const routes = [
@@ -66,9 +66,9 @@ const routes = [
     component: ProgramAgentView
   },,
   {
-    path: '/receipt',
-    name: 'receipt',
-    component: ReceiptAllListView
+    path: '/payments/program-agent',
+    name: 'program-agent-payments',
+    component: ProgramAgentPaymentsAllListView
   },
 ]
 
