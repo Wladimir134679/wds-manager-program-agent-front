@@ -11,6 +11,7 @@ import NotFoundView from "@/views/NotFoundView";
 import RegistrationView from "@/views/RegistrationView";
 import UsersListView from "@/views/UsersListView";
 import ProgramAgentPaymentsAllListView from "@/views/ProgramAgentPaymentsAllListView.vue";
+import priceList from "@/views/PriceList.vue";
 
 
 const routes = [
@@ -64,11 +65,16 @@ const routes = [
     path: '/program-agent/:id',
     name: 'programAgentId',
     component: ProgramAgentView
-  },,
+  },
   {
     path: '/payments/program-agent',
     name: 'program-agent-payments',
     component: ProgramAgentPaymentsAllListView
+  },
+  {
+    path: '/price-list',
+    name: 'price-list',
+    component: priceList
   },
 ]
 

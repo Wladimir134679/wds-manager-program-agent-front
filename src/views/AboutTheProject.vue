@@ -1,25 +1,34 @@
 <template>
 <v-container>
-  <v-card>
-    <v-card-title>
-      О проекте
-    </v-card-title>
-    <v-card-text>
-      Этот сайт предназначен для управление программными агетами. Програмный агент может представлять из себя
-      умного бота одного из соц сетей. Может быть автоматизированной программой по расчету данных, предаставляя данные в
-      приятном виде, в специальных графиках.<br>
-      Вам нужно лишь описать все требования и пожелания в заявке, отсавить контанты для связи. После чего операторы
-      свяжутся с Вами для уточнения деталей. После чего приступим к разработке.<br>
-      С готовым программным агентом можно работать через удобный графический интерфейс сайта. Максимально заточен под Ваши
-      требования и желания, управляя каждым действием агента
-    </v-card-text>
-  </v-card>
+  <v-row>
+    <v-col class="v-col-12">
+      <about-the-project-card/>
+    </v-col>
+    <v-col class="v-col-md-6 v-col-12">
+      <project-contacts-card/>
+    </v-col>
+    <v-col class="v-col-md-6 v-col-12">
+      <v-card>
+        <v-card-title>
+          Информация
+        </v-card-title>
+        <v-card-text>
+          Текущая информационная система была разработа для курсовой работы по
+          предмету "Проектирование вычислительных систем" по направлению "Информатика и вычислетельная техника"
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </v-container>
 </template>
 
 <script>
+import ProjectContactsCard from "@/components/ProjectContactsCard.vue";
+import AboutTheProjectCard from "@/components/AboutTheProjectCard.vue";
+
 export default {
-  name: "AboutTheProject"
+  name: "AboutTheProject",
+  components: {AboutTheProjectCard, ProjectContactsCard}
 }
 </script>
 
