@@ -4,6 +4,7 @@ import config from "@/api/config";
 
 const pathThis = config.api + "/user/agent/payments"
 
+const findById = pathThis + '';
 const receiptAll = pathThis + '/all';
 const editReceipt = pathThis + '/edit';
 const createReceipt = pathThis + '/create';
@@ -13,6 +14,21 @@ export default {
     getAllListProgramAgentPayments: function (ok, error) {
         axios.get(receiptAll,
             {
+                headers: api.getHeadersLogin(),
+            })
+            .then(value => {
+                ok(value)
+            })
+            .catch(reason => {
+                error(reason)
+            })
+    },
+    findById: function (id, ok, error) {
+        axios.get(findById,
+            {
+                params: {
+                    'programAgentId': id
+                },
                 headers: api.getHeadersLogin(),
             })
             .then(value => {

@@ -1,17 +1,20 @@
 <template>
   <v-card :loading="loadingProgramAgents">
-    <v-card-title>
-      Заказ №{{ order.id }}
+    <v-card-title v-if="!infoForAgent">
+      Платеж №{{ order.id }}
     </v-card-title>
-    <v-card-text v-if="!(loadingProgramAgents && loadUsers)">
-      <v-row v-if="!!getProgramAgent(order.programAgentId)">
+    <v-card-title v-if="infoForAgent">
+      Оплата за агента. Платеж №{{ order.id }}
+    </v-card-title>
+    <v-card-text v-if="!(loadingProgramAgents)">
+      <v-row v-if="getProgramAgent(order.programAgentId)">
         <v-col cols="4">
           Програмный агент
         </v-col>
         <v-col>
           <b>{{ thisProgramAgentData(order.programAgentId).name }}</b>
         </v-col>
-        <v-col>
+        <v-col v-if="!infoForAgent">
           <v-btn size="small" :to="'/program-agent/' + thisProgramAgentData(order.programAgentId).id" block>
             Перейти
           </v-btn>
@@ -99,6 +102,7 @@ import {mapGetters} from "vuex";
 import userProfileData from "@/mixins/userProfileData";
 import orderApi from "@/api/programAgentPaymentsApi";
 import ProgramAgentPaymentsEditCard from "@/components/ProgramAgentPaymentsEditFormCard.vue";
+import programAgentsMethod from "@/mixins/programAgentsMethod";
 
 export default {
   name: "ProgramAgentPaymentsInfoCard",
@@ -108,7 +112,7 @@ export default {
       openEdit: false,
     }
   },
-  mixins: [userProfileData],
+  mixins: [userProfileData, programAgentsMethod],
   mounted() {
   },
   props: {
@@ -116,12 +120,11 @@ export default {
       type: Object
     },
     updateList: {type: Function},
-    loadingProgramAgents: {type: Boolean, default: true},
     loadingUsers: {type: Boolean, default: true},
+    infoForAgent: {type: Boolean, default: false},
   },
   computed: {
     ...mapGetters({
-      getProgramAgent: "programAgents/getAgentInfo",
       getUser: "users/getUserById",
     }),
   },

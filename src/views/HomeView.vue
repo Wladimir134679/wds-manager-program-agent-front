@@ -13,7 +13,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="v-col-6">
+      <v-col class="v-col-md-6 v-col-12">
         <v-card>
           <v-card-title>
             Наши контакты
@@ -46,7 +46,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="6">
+      <v-col class="v-col-md-6 v-col-12">
         <v-card>
           <v-card-title>
             Информация

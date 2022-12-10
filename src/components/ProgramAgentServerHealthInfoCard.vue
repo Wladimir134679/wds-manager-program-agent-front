@@ -28,7 +28,7 @@
           </v-col>
           <v-col style="margin-left: 20px">
             <v-row>
-              <v-col class="v-col-md-3 v-col-12 font-weight-medium">
+              <v-col class="v-col-md-4 v-col-12 font-weight-medium">
                 Используется
               </v-col>
               <v-col class="text-decoration-underline">
@@ -37,7 +37,7 @@
             </v-row>
 
             <v-row>
-              <v-col class="v-col-md-3 v-col-12 font-weight-medium">
+              <v-col class="v-col-md-4 v-col-12 font-weight-medium">
                 Свободно
               </v-col>
               <v-col class="text-decoration-underline">
@@ -45,7 +45,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col class="v-col-md-3 v-col-12 font-weight-medium">
+              <v-col class="v-col-md-4 v-col-12 font-weight-medium">
                 Доступно JVM
               </v-col>
               <v-col class="text-decoration-underline">
@@ -53,7 +53,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col class="v-col-md-3 v-col-12 font-weight-medium">
+              <v-col class="v-col-md-4 v-col-12 font-weight-medium">
                 Доступно системе
               </v-col>
               <v-col class="text-decoration-underline">

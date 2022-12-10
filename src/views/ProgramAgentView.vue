@@ -3,10 +3,13 @@
 
     <v-row>
       <v-col :class="cardStyle">
-        <program-agent-description :bot="agentInfo"/>
+        <program-agent-description :bot="agentInfo" :update-data-func="thisUpdateData"/>
       </v-col>
       <v-col :class="cardStyle" v-if="isAdmin">
         <program-agent-token-visible :program-agent="agentInfo"/>
+      </v-col>
+      <v-col :class="cardStyle" v-for="payments in paymentsArray" :key="payments">
+        <program-agent-payments-info-card :order="payments" :info-for-agent="true" :update-list="thisUpdateData"/>
       </v-col>
       <v-col :class="cardStyle" v-if="isAdmin">
         <program-agent-user-manager-card :program-agent="agentInfo"/>
@@ -36,6 +39,8 @@ import ProgramAgentDataHealthInfoCard from "@/components/ProgramAgentDataHealthI
 import ProgramAgentChartTimestampViewCard from "@/components/ProgramAgentChartTimestampViewCard";
 import ProgramAgentUserManagerCard from "@/components/ProgramAgentUserManagerCard";
 import api from "@/api/api";
+import programAgentPaymentsApi from "@/api/programAgentPaymentsApi";
+import ProgramAgentPaymentsInfoCard from "@/components/ProgramAgentPaymentsInfoCard.vue";
 
 export default {
   name: "ProgramAgentView",
@@ -43,10 +48,12 @@ export default {
     return {
       previewCharts: undefined,
       // cardStyle: 'v-col-lg-4 v-col-md-6 v-col-12'
-      cardStyle: 'v-col-md-6 v-col-12'
+      cardStyle: 'v-col-md-6 v-col-12',
+      paymentsArray: []
     }
   },
   components: {
+    ProgramAgentPaymentsInfoCard,
     ProgramAgentDataHealthInfoCard,
     ProgramAgentUserManagerCard,
     ProgramAgentServerHealthInfoCard,
@@ -56,17 +63,8 @@ export default {
   },
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
-    if(!!this.agentInfo && this.agentInfo.online) {
-      this.loadHealth({
-        id: this.getAgentId,
-        ok: function () {
-          console.log("Load health ok")
-        },
-        error: function () {
-          console.log("Error health load")
-        }
-      })
-      this.loadChartsPreview()
+    if (!!this.agentInfo && this.agentInfo.online) {
+      this.thisUpdateData()
     }
   },
   computed: {
@@ -87,6 +85,21 @@ export default {
     ...mapActions({
       loadHealth: "programAgents/loadHealth"
     }),
+    thisUpdateData() {
+      this.loadHealth({
+        id: this.getAgentId,
+        ok: function () {
+        },
+        error: function () {
+        }
+      })
+      this.loadChartsPreview()
+      programAgentPaymentsApi.findById(this.getAgentId, (ok) => {
+        this.paymentsArray = ok.data
+      }, error => {
+
+      })
+    },
     loadChartsPreview() {
       return api.getAllChartsPreview(this.getAgentId, (result) => {
         console.log(result)

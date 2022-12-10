@@ -5,7 +5,7 @@
         {{ bot.name }}
         <span v-if="bot.online" style="color: green">Online</span>
       </span>
-      <v-btn v-if="!preview" icon="mdi-reload" size="small">
+      <v-btn v-if="!preview" icon="mdi-reload" size="small" @click="updateDataFunc()">
       </v-btn>
     </v-card-title>
     <v-card-text>
@@ -48,6 +48,7 @@ export default {
           default: false
         },
     link: String,
+    updateDataFunc: {type: Function, default: ()=>{}}
   }
 }
 </script>
