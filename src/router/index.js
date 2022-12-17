@@ -12,6 +12,7 @@ import RegistrationView from "@/views/RegistrationView";
 import UsersListView from "@/views/UsersListView";
 import ProgramAgentPaymentsAllListView from "@/views/ProgramAgentPaymentsAllListView.vue";
 import priceList from "@/views/PriceList.vue";
+import RegistrationVerify from "@/views/RegistrationVerify.vue";
 
 
 const routes = [
@@ -75,6 +76,11 @@ const routes = [
     path: '/price-list',
     name: 'price-list',
     component: priceList
+  },,
+  {
+    path: '/registration/verify',
+    name: 'registration-verify',
+    component: RegistrationVerify
   },
 ]
 
