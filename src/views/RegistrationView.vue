@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="d-md-flex justify-center">
-      <v-col class="v-col-md-8">
+      <v-col class="v-col-md-6 v-col-12">
         <v-card>
           <v-card-title>
             Регистрация
@@ -33,9 +33,9 @@
                       v-model="password[0]"
                       :readonly="loading"
                       :rules="[rules.requiredField, rules.passwordLen]"
-                      :append-icon="showPassword[0] ? 'mdi-eye' : 'mdi-eye-off'"
+                      :append-inner-icon="showPassword[0] ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="showPassword[0] ? 'text' : 'password'"
-                      @click:append="showPassword[0] = !showPassword[0]"
+                      @click:append-inner="showPassword[0] = !showPassword[0]"
                       label="Пароль"
                       placeholder="Введите свой пароль">
                   </v-text-field>
@@ -44,9 +44,9 @@
                       v-model="password[1]"
                       :readonly="loading"
                       :rules="[rules.requiredField, rules.passwordLen, rules.requiredEq]"
-                      :append-icon="showPassword[1] ? 'mdi-eye' : 'mdi-eye-off'"
+                      :append-inner-icon="showPassword[1] ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="showPassword[1] ? 'text' : 'password'"
-                      @click:append="showPassword[1] = !showPassword[1]"
+                      @click:append-inner="showPassword[1] = !showPassword[1]"
                       label="Повторите пароль"
                       placeholder="Повторите пароль">
                   </v-text-field>
@@ -63,7 +63,7 @@
                       variant="outlined"
                       size="large"
                       block>
-                    Войти
+                    Зарегистрироваться
                   </v-btn>
                 </v-form>
               </v-col>

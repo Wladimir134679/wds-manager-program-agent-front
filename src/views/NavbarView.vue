@@ -82,13 +82,6 @@
           </v-list-item-title>
         </v-list-item>
 
-        <v-list-item link v-if="!isAuth" to="/registration">
-          <v-list-item-title>
-            <v-icon>mdi-account-multiple-plus</v-icon>
-            Регистрация
-          </v-list-item-title>
-        </v-list-item>
-
         <v-list-item link v-if="!isAuth" :to="'/login'">
           <v-list-item-title>
             <v-icon>mdi-account-plus</v-icon>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="d-md-flex justify-center">
-      <v-col class="v-col-md-8">
+      <v-col class="v-col-md-6 v-col-12">
         <v-card class="">
           <v-card-title>
             Авторизация
@@ -26,9 +26,9 @@
                       v-model="password"
                       :readonly="loading"
                       :rules="[rules.requiredField, rules.passwordLen]"
-                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                      :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="showPassword ? 'text' : 'password'"
-                      @click:append="showPassword = !showPassword"
+                      @click:append-inner="showPassword = !showPassword"
                       label="Пароль"
                       placeholder="Введите свой пароль">
 
@@ -43,12 +43,27 @@
                       :loading="loading"
                       type="submit"
                       color="success"
-                      variant="tonal"
+                      variant="outlined"
                       size="large"
                       block>
                     Войти
                   </v-btn>
                 </v-form>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+
+          <v-card-actions class="ma-2">
+            <v-row>
+              <v-col>
+                <v-btn to="/registration" block variant="outlined" prepend-icon="mdi-account-multiple-plus">
+                  Регистрация
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn to="/recovery-password" block variant="outlined" prepend-icon="mdi-lock-check">
+                  Восстановить пароль
+                </v-btn>
               </v-col>
             </v-row>
           </v-card-actions>

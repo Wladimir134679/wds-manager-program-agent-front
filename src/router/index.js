@@ -13,6 +13,8 @@ import UsersListView from "@/views/UsersListView";
 import ProgramAgentPaymentsAllListView from "@/views/ProgramAgentPaymentsAllListView.vue";
 import priceList from "@/views/PriceList.vue";
 import RegistrationVerify from "@/views/RegistrationVerify.vue";
+import RecoveryPasswordPage from "@/views/RecoveryPasswordPage.vue";
+import RecoveryPasswordVerifyPage from "@/views/RecoveryPasswordVerifyPage.vue";
 
 
 const routes = [
@@ -76,11 +78,21 @@ const routes = [
     path: '/price-list',
     name: 'price-list',
     component: priceList
-  },,
+  },
   {
     path: '/registration/verify',
     name: 'registration-verify',
     component: RegistrationVerify
+  },
+  {
+    path: '/recovery-password',
+    name: 'recovery-password',
+    component: RecoveryPasswordPage
+  },
+  {
+    path: '/recovery-password/verify',
+    name: 'recovery-password/verify',
+    component: RecoveryPasswordVerifyPage
   },
 ]
 
