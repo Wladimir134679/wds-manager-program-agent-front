@@ -15,6 +15,7 @@ import priceList from "@/views/PriceList.vue";
 import RegistrationVerify from "@/views/RegistrationVerify.vue";
 import RecoveryPasswordPage from "@/views/RecoveryPasswordPage.vue";
 import RecoveryPasswordVerifyPage from "@/views/RecoveryPasswordVerifyPage.vue";
+import PayRedirectView from "@/views/PayRedirectView.vue";
 
 
 const routes = [
@@ -93,6 +94,11 @@ const routes = [
     path: '/recovery-password/verify',
     name: 'recovery-password/verify',
     component: RecoveryPasswordVerifyPage
+  },
+  {
+    path: '/pay/c',
+    name: 'pay/c',
+    component: PayRedirectView
   },
 ]
 

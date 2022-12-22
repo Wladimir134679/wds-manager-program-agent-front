@@ -23,17 +23,9 @@
       <v-btn block variant="outlined">
         Во весь экран
         <v-dialog activator="parent">
-          <program-agent-chart-timestamp-view-card :program-agent="programAgent" :preview="preview"
-                                                   :fullscreenMode="true" :chart-height="500"/>
-          <!--          <v-card>-->
-          <!--            <v-card-title>-->
-          <!--              {{ preview.nameDisplay }}-->
-          <!--            </v-card-title>-->
-          <!--            <v-card-text>-->
-          <!--              <apexchart ref="chartTimeFull" class="pa-5" width="100%" height="600" :series="seriesDataFull"-->
-          <!--                         :options="options"/>-->
-          <!--            </v-card-text>-->
-          <!--          </v-card>-->
+          <program-agent-chart-timestamp-view-card
+              :program-agent="programAgent" :preview="preview"
+              :fullscreenMode="true" :chart-height="300"/>
         </v-dialog>
       </v-btn>
     </v-card-actions>
@@ -44,6 +36,7 @@
 import api from "@/api/api";
 import vueApexcharts from "vue3-apexcharts/src";
 import vue3Apexcharts from "vue3-apexcharts/src/vue3-apexcharts";
+import vuetify from "@/plugins/vuetify";
 
 export default {
   name: "ProgramAgentChartTimestampViewCard",
@@ -71,7 +64,7 @@ export default {
           type: "MONTH",
           name: "Месяцы"
         }
-      ]
+      ],
     }
   },
   props: {
