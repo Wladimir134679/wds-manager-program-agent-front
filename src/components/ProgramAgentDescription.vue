@@ -4,6 +4,7 @@
       <span>
         {{ bot.name }}
         <span v-if="bot.online" style="color: green">Online</span>
+        <span v-if="!bot.online" style="color: indianred">Offline</span>
       </span>
       <v-btn v-if="!preview" icon="mdi-reload" size="small" @click="updateDataFunc()">
       </v-btn>

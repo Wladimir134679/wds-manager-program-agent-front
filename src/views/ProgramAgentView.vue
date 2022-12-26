@@ -8,39 +8,57 @@
       <v-col :class="cardStyle" v-if="isAdmin">
         <program-agent-token-visible :program-agent="agentInfo"/>
       </v-col>
-      <v-col :class="cardStyle" v-for="payments in paymentsArray" :key="payments">
-        <program-agent-payments-info-card :order="payments" :info-for-agent="true" :update-list="thisUpdateData"/>
-      </v-col>
       <v-col :class="cardStyle" v-if="isAdmin">
         <program-agent-user-manager-card :program-agent="agentInfo"/>
       </v-col>
       <v-col :class="cardStyle">
-        <program-agent-data-health-info-card :program-agent="agentInfo"/>
-      </v-col>
-      <v-col :class="cardStyle">
-        <program-agent-server-health-info-card :program-agent="agentInfo"/>
-      </v-col>
-      <v-col :class="cardStyle" v-if="previewCharts !== undefined" v-for="preview in previewCharts" :key="preview">
-        <program-agent-chart-timestamp-view-card :program-agent="agentInfo" :preview="preview"/>
-      </v-col>
-      <v-col :class="cardStyle">
         <v-card>
           <v-card-title>
-            Таблицы
+            Временные графики
           </v-card-title>
           <v-card-actions>
             <v-row>
-              <v-col cols="12" v-for="table in tablesPreview" :key="table.name" >
-                <v-btn variant="outlined" block @click="table.open = !table.open">
-                  {{table.title}}
-                  <v-dialog v-model="table.open">
-                    <program-agent-table-card :tableName="table.name" :agentId="getAgentId" :closeFunc="()=>{table.open = false}"/>
+              <v-col  class="v-col-md-6 v-col-12"  v-for="chart in previewCharts" :key="chart">
+                <v-btn block variant="outlined" rounded="pill" @click="chart.open = !chart.open">
+                  {{ chart.nameDisplay }}
+                  <v-dialog v-model="chart.open">
+                    <program-agent-chart-timestamp-view-card :program-agent="agentInfo" :preview="chart" :fullscreenMode="true"/>
                   </v-dialog>
                 </v-btn>
               </v-col>
             </v-row>
           </v-card-actions>
         </v-card>
+      </v-col>
+      <v-col :class="cardStyle" v-if="tablesPreview && tablesPreview.length !== 0">
+        <v-card>
+          <v-card-title>
+            Таблицы
+          </v-card-title>
+          <v-card-actions>
+            <v-row>
+              <v-col class="v-col-md-6 v-col-12" v-for="table in tablesPreview" :key="table.name">
+                <v-btn variant="outlined" block @click="table.open = !table.open" rounded="pill">
+                  {{ table.title }}
+                  <v-dialog v-model="table.open">
+                    <program-agent-table-card :tableName="table.name" :agentId="getAgentId"
+                                              :closeFunc="()=>{table.open = false}"/>
+                  </v-dialog>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
+      <v-col :class="cardStyle" v-if="agentInfo.online">
+        <program-agent-data-health-info-card :program-agent="agentInfo"/>
+      </v-col>
+      <v-col :class="cardStyle" v-for="payments in paymentsArray" :key="payments">
+        <program-agent-payments-info-card :order="payments" :info-for-agent="true" :update-list="thisUpdateData"/>
+      </v-col>
+      <v-col :class="cardStyle" v-if="agentInfo.online">
+        <program-agent-server-health-info-card :program-agent="agentInfo"/>
       </v-col>
     </v-row>
 
@@ -140,6 +158,7 @@ export default {
     loadChartsPreview() {
       return api.getAllChartsPreview(this.getAgentId, (result) => {
         this.previewCharts = result.data
+        this.previewCharts.forEach(value1 => value1.open = false)
       }, (error) => {
         console.log(error)
       })
