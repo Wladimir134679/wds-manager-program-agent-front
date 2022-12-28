@@ -5,6 +5,29 @@
       <v-col :class="cardStyle">
         <program-agent-description :bot="agentInfo" :update-data-func="thisUpdateData"/>
       </v-col>
+
+      <v-col :class="cardStyle">
+        <v-card>
+          <v-card-title>
+            Процессы
+          </v-card-title>
+          <v-card-actions>
+            <v-row>
+              <v-col cols="12">
+                <v-row v-for="bar in progressBars" :key="bar.name" :class="{'text-grey': !bar.isProcessing}">
+                  <v-col cols="12">
+                    <b>{{bar.name}}</b> / {{bar.description}}
+                  </v-col>
+                  <v-col cols="12">
+                    <v-progress-linear height="10" v-model="bar.progress" max="1"/>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
       <v-col :class="cardStyle" v-if="isAdmin">
         <program-agent-token-visible :program-agent="agentInfo"/>
       </v-col>
@@ -12,45 +35,11 @@
         <program-agent-user-manager-card :program-agent="agentInfo"/>
       </v-col>
       <v-col :class="cardStyle">
-        <v-card>
-          <v-card-title>
-            Временные графики
-          </v-card-title>
-          <v-card-actions>
-            <v-row>
-              <v-col  class="v-col-md-6 v-col-12"  v-for="chart in previewCharts" :key="chart">
-                <v-btn block variant="outlined" rounded="pill" @click="chart.open = !chart.open">
-                  {{ chart.nameDisplay }}
-                  <v-dialog v-model="chart.open">
-                    <program-agent-chart-timestamp-view-card :program-agent="agentInfo" :preview="chart" :fullscreenMode="true"/>
-                  </v-dialog>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-actions>
-        </v-card>
+        <program-agent-list-chart-timestamp :agent-info="agentInfo"/>
       </v-col>
-      <v-col :class="cardStyle" v-if="tablesPreview && tablesPreview.length !== 0">
-        <v-card>
-          <v-card-title>
-            Таблицы
-          </v-card-title>
-          <v-card-actions>
-            <v-row>
-              <v-col class="v-col-md-6 v-col-12" v-for="table in tablesPreview" :key="table.name">
-                <v-btn variant="outlined" block @click="table.open = !table.open" rounded="pill">
-                  {{ table.title }}
-                  <v-dialog v-model="table.open">
-                    <program-agent-table-card :tableName="table.name" :agentId="getAgentId"
-                                              :closeFunc="()=>{table.open = false}"/>
-                  </v-dialog>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-actions>
-        </v-card>
+      <v-col :class="cardStyle">
+        <program-agent-list-tables-card :agent-info="agentInfo"/>
       </v-col>
-
       <v-col :class="cardStyle" v-if="agentInfo.online">
         <program-agent-data-health-info-card :program-agent="agentInfo"/>
       </v-col>
@@ -81,19 +70,23 @@ import ProgramAgentPaymentsInfoCard from "@/components/ProgramAgentPaymentsInfoC
 import axios from "axios";
 import config from "@/api/config";
 import ProgramAgentTableCard from "@/components/ProgramAgentTableCard.vue";
+import ProgramAgentListChartTimestamp from "@/components/ProgramAgentListChartTimestamp.vue";
+import ProgramAgentListTablesCard from "@/components/ProgramAgentListTablesCard.vue";
 
 export default {
   name: "ProgramAgentView",
   data() {
     return {
-      previewCharts: undefined,
       // cardStyle: 'v-col-lg-4 v-col-md-6 v-col-12'
       cardStyle: 'v-col-md-6 v-col-12',
       paymentsArray: [],
-      tablesPreview: []
+      progressBars: [],
+      timer: null
     }
   },
   components: {
+    ProgramAgentListTablesCard,
+    ProgramAgentListChartTimestamp,
     ProgramAgentTableCard,
     ProgramAgentPaymentsInfoCard,
     ProgramAgentDataHealthInfoCard,
@@ -106,6 +99,9 @@ export default {
   mixins: [isAuthViewRedirect, userProfileData],
   mounted() {
     this.thisUpdateData()
+  },
+  destroyed() {
+    this.startTimer()
   },
   computed: {
     ...mapState({
@@ -134,35 +130,36 @@ export default {
           error: function () {
           }
         })
-        this.loadChartsPreview()
       }
       programAgentPaymentsApi.findById(this.getAgentId, (ok) => {
         this.paymentsArray = ok.data
       }, error => {
 
       })
-
-      let pathApiTablesPreview = config.api + "/user/agent/table/preview"
-      axios.get(pathApiTablesPreview, {
-        params: {
-          id: this.getAgentId,
+      this.updateProgressBar()
+      this.startTimer()
+    },
+    updateProgressBar(){
+      const pathBar = config.api + "/user/agent/progressbar"
+      axios.get(pathBar, {
+        params:{
+          id: this.agentInfo.id
         },
         headers: api.getHeadersLogin()
       }).then(value => {
-        this.tablesPreview = value.data
-        this.tablesPreview.forEach(value1 => value1.open = false)
+        this.progressBars = value.data
       }).catch(reason => {
-        console.log(reason)
+        this.stopTimer()
       })
     },
-    loadChartsPreview() {
-      return api.getAllChartsPreview(this.getAgentId, (result) => {
-        this.previewCharts = result.data
-        this.previewCharts.forEach(value1 => value1.open = false)
-      }, (error) => {
-        console.log(error)
-      })
-    }
+    startTimer() {
+      this.timer = setInterval(() => {
+        this.updateProgressBar()
+      }, 5000)
+    },
+    stopTimer() {
+      clearTimeout(this.timer)
+    },
   }
 }
 </script>
