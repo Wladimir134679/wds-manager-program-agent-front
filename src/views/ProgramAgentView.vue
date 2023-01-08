@@ -101,7 +101,7 @@ export default {
     this.thisUpdateData()
   },
   destroyed() {
-    this.startTimer()
+    this.stopTimer()
   },
   computed: {
     ...mapState({
@@ -154,7 +154,11 @@ export default {
     },
     startTimer() {
       this.timer = setInterval(() => {
-        this.updateProgressBar()
+        try {
+          this.updateProgressBar()
+        }catch (e) {
+          this.stopTimer()
+        }
       }, 5000)
     },
     stopTimer() {
