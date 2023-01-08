@@ -78,7 +78,7 @@ export default {
         }
       })
           .then(value => {
-            this.message = "Запрос отправлен на почту"
+            this.message = "Ссылка для восстановления пароля отправлена Вам на почту"
             this.loading = false;
           })
           .catch(reason => {

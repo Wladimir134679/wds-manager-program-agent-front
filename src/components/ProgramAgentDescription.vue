@@ -2,9 +2,9 @@
   <v-card v-if="!!bot">
     <v-card-title class=" d-flex justify-space-between">
       <span>
+        <span v-if="bot.online" style="color: green">◉</span>
+        <span v-if="!bot.online" style="color: indianred">◉</span>
         {{ bot.name }}
-        <span v-if="bot.online" style="color: green">Online</span>
-        <span v-if="!bot.online" style="color: indianred">Offline</span>
       </span>
       <v-btn v-if="!preview" icon="mdi-reload" size="small" @click="updateDataFunc()">
       </v-btn>

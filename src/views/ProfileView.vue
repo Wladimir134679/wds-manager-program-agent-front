@@ -7,7 +7,7 @@
 
       <v-col class="v-col-12">
         <v-card :loading="loadingHistory">
-          <v-card-title>История операций по балансу</v-card-title>
+          <v-card-title>История операций по кошельку</v-card-title>
           <v-card-actions>
             <v-table class="w-100" height="400">
               <thead>

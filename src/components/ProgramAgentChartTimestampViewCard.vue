@@ -1,9 +1,9 @@
 <template>
-  <v-card>
+  <v-card class="pa-5">
     <v-card-title>
       {{ preview.nameDisplay }}
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="pl-4">
       {{ preview.description }}
     </v-card-text>
     <v-card-actions v-if="preview.isAbilityGroupTimestamp">

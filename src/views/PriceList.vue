@@ -94,7 +94,7 @@ export default {
       cardClass: "v-col-md-4 v-col-12",
       priceList: [
         {
-          "name": "Минимум",
+          "name": "Для себя",
           "description": "Простой проект для себя и своих близких. Частному лицу базовый пакет",
           "priceDev": 2500.0,
           "priceOps": 1000.0,

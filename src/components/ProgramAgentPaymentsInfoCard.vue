@@ -1,30 +1,19 @@
 <template>
   <v-card :loading="loadingProgramAgents">
     <v-card-title v-if="!infoForAgent">
-      Платеж №{{ order.id }}
+      Платеж за
+
+      <router-link :to="'/program-agent/' + thisProgramAgentData(order.programAgentId).id" v-if="!(loadingProgramAgents)">{{ thisProgramAgentData(order.programAgentId).name }}</router-link>
+<!--      <v-btn v-if="!infoForAgent" -->
+<!--             variant="tonal" -->
+<!--             class="float-right"-->
+<!--             :to="'/program-agent/' + thisProgramAgentData(order.programAgentId).id">-->
+<!--      </v-btn>-->
     </v-card-title>
     <v-card-title v-if="infoForAgent">
-      Оплата за агента. Платеж №{{ order.id }}
+      Плата за агента
     </v-card-title>
     <v-card-text v-if="!(loadingProgramAgents)">
-      <v-row v-if="getProgramAgent(order.programAgentId)">
-        <v-col cols="4">
-          Програмный агент
-        </v-col>
-        <v-col>
-          <b>{{ thisProgramAgentData(order.programAgentId).name }}</b>
-        </v-col>
-        <v-col v-if="!infoForAgent">
-          <v-btn size="small" :to="'/program-agent/' + thisProgramAgentData(order.programAgentId).id" block>
-            Перейти
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-row v-else>
-        <v-col>
-          <b>Не доступный програмный агент</b>
-        </v-col>
-      </v-row>
       <v-row v-if="isAdmin">
         <v-col cols="4">
           Пользователь
@@ -33,7 +22,7 @@
           <b>{{ getUser(order.customerId).username }}</b>
         </v-col>
         <v-col>
-          <v-btn size="small" href="/" block>
+          <v-btn size="small" href="/" block variant="outlined">
             Перейти
           </v-btn>
         </v-col>
@@ -43,13 +32,13 @@
           Сумма
         </v-col>
         <v-col>
-          <b>{{ order.amount.toFixed(2) }}</b> монет за 30 дней
+          <b>{{ order.amount.toFixed(2) }}</b> рублей за 30 дней
         </v-col>
         <v-col>
-          <b>{{ (order.amount / 30).toFixed(2) }}</b> монет в день
+          <b>{{ (order.amount / 30).toFixed(2) }}</b> рублей в день
         </v-col>
       </v-row>
-      <v-row v-if="isAdmin">
+      <v-row v-if="!infoForAgent">
         <v-col cols="4">
           Создан
         </v-col>
@@ -57,9 +46,9 @@
           {{ new Date(order.createTimestamp).toLocaleString() }}
         </v-col>
       </v-row>
-      <v-row v-if="isAdmin">
+      <v-row>
         <v-col cols="4">
-          Последняя обработка
+          Последнее списание было
         </v-col>
         <v-col v-if="!!order.lastProcessingTimestamp">
           {{ new Date(order.lastProcessingTimestamp).toLocaleString() }}

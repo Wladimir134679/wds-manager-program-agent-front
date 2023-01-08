@@ -95,7 +95,7 @@
             link to="/price-list">
           <v-list-item-title>
             <v-icon>mdi-help-box</v-icon>
-            Список цен
+            Тарифы
           </v-list-item-title>
         </v-list-item>
 

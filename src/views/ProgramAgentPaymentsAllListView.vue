@@ -4,7 +4,7 @@
       <v-col cols="12">
         <v-card :loading="loading">
           <v-card-title>
-            Квитанции
+            Платежи
           </v-card-title>
           <v-card-actions v-if="isAdmin">
             <v-btn variant="outlined" size="small" @click="openCreateDialog = !openCreateDialog">

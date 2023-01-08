@@ -1,9 +1,9 @@
 <template>
-  <v-card v-if="!loading">
+  <v-card v-if="!loading" class="pa-5">
     <v-card-title>
       {{ tableData.title }}
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="pl-4">
       {{ tableData.description }}
     </v-card-text>
     <v-card-actions>
